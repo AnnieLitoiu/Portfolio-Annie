@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfolio Annie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" sizes="any"
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='3' result='blur'/%3E%3CfeMerge%3E%3CfeMergeNode in='blur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg stroke='%230E7478' stroke-width='8' stroke-linecap='round' fill='none' filter='url(%23glow)'%3E%3Cpath d='M30 25 L10 50 L30 75'/%3E%3Cpath d='M70 25 L90 50 L70 75'/%3E%3Cline x1='45' y1='20' x2='55' y2='80'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="topbar" id="topbar">
+    <a href="#home" class="brand">
+      <span class="brand-accent">Annie</span><span class="brand-main">Code</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <a href="#home" class="nav-link active">Accueil</a>
+      <a href="#skills" class="nav-link">Compétences</a>
+      <a href="#projects" class="nav-link">Portfolio</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="top-actions">
+      <div class="lang-group" id="lang-group">
+        <button class="lang-btn" id="lang-btn">
+          <span id="current-lang">FR</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="lang-menu" id="lang-menu">
+          <button data-lang="FR">FR</button>
+          <button data-lang="EN">EN</button>
+          <button data-lang="RO">RO</button>
+        </div>
+      </div>
+      <button class="theme-btn" id="theme-btn">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero section">
+    <canvas id="hero-bg"></canvas>
+    <div class="hero-container">
+      <div class="hero-content">
+        <p class="tag-en big-intro">Hi, I'm  <span class="name-highlight"> Annie</span></p>
+        <h1 class="typed-wrapper">
+          <span id="typed-text">Web Developer Junior</span>
+          <span class="typed-cursor" id="typed-cursor"></span>
+        </h1>
+        <p class="subtitle">
+          Je conçois des expériences digitales uniques grâce à un design innovant et un code soigné.
+          Je transforme les idées en sites et applications à la fois beaux, modernes, accessibles et faciles à maintenir.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn primary">Voir mon portfolio</a>
+          <a href="#contact" class="btn ghost" id="contact-btn">Me contacter</a>
+        </div>
+      </div>
+
+      <div class="hero-avatar">
+        <div class="avatar-glow"></div>
+        <img src="/images/annie.jpg" alt="Avatar d’Annie" />
+      </div>
+    </div>
+  </section>
+
+  <!-- A PROPOS -->
+  <section id="about" class="section about-section">
+    <div class="section-head">
+      <h2>À propos</h2>
+      <p>Quelques infos sur mon parcours et ma façon de travailler.</p>
+    </div>
+
+    <div class="about-grid">
+      <!-- colonne gauche : mini intro -->
+      <div class="about-intro">
+        <h3 class="about-name">AnnieCode</h3>
+        <p class="about-text">
+          Développeuse web junior en reconversion, passionnée par la création d’interfaces modernes et accessibles.
+          J’aime transformer une idée en un produit clair, bien structuré et facile à faire évoluer.
+        </p>
+        <p class="about-highlight">
+          Actuellement à la recherche d’un stage / de premiers projets pour mettre en pratique mes compétences.
+        </p>
+        <a href="#contact" class="btn primary">Travaillons ensemble</a>
+        <a href="/files/CV-Anisoara-Litoiu.pdf" class="btn primary" download>
+          <i class="fa-solid fa-download"></i> Télécharger mon CV
+        </a>
+      </div>
+
+      <!-- colonne droite : accordéon -->
+      <div class="about-accordion" id="about-accordion">
+        <article class="accordion-item active">
+          <button class="accordion-header">
+            Mon parcours
+            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-panel">
+            <p>
+              Issue d’un parcours polyvalent, je me suis orientée vers le développement web pour associer créativité
+              et logique. Formée aux bases du web (HTML, CSS, JavaScript) ainsi qu’aux outils modernes, je souhaite
+              continuer à apprendre au contact d’une équipe.
+            </p>
+          </div>
+        </article>
+
+        <article class="accordion-item">
+          <button class="accordion-header">
+            Ce que je sais faire
+            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-panel">
+            <p>
+              Intégration de maquettes responsives, création de pages dynamiques en JavaScript, utilisation de frameworks front, conception et gestion de bases de données, avec une attention particulière à l’accessibilité et au design.
+            </p>
+          </div>
+        </article>
+
+        <article class="accordion-item">
+          <button class="accordion-header">
+            Ce que je recherche
+            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-panel">
+            <p>
+              Un environnement où je peux contribuer à de vrais projets, développer mes compétences tant en front-end qu’en back-end, tout en apportant mon sens de l’organisation, de la rigueur et de la communication.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+<!-- COMPETENCES -->
+<section id="skills" class="section skills-section">
+  <div class="section-head">
+    <h2>Compétences</h2>
+    <p>Les technologies que j’utilise, d’après mon parcours.</p>
+  </div>
+
+  <div class="skills-grid">
+
+    <!-- FRONT-END -->
+    <article class="skill-card">
+      <h3><i class="fa-solid fa-code"></i> Front-end</h3>
+      <p class="skill-desc">Création d’interfaces modernes et responsives.</p>
+      <ul class="skill-list icons-list">
+        <li><i class="devicon-html5-plain colored"></i> HTML5</li>
+        <li><i class="devicon-css3-plain colored"></i> CSS3</li>
+        <li><i class="devicon-javascript-plain colored"></i> JavaScript</li>
+        <li><i class="devicon-react-original colored"></i> React (bases)</li>
+        <li><i class="devicon-angularjs-plain colored"></i> Angular</li>
+      </ul>
+    </article>
+
+    <!-- BACK-END -->
+    <article class="skill-card">
+      <h3><i class="fa-solid fa-gears"></i> Back-end</h3>
+      <p class="skill-desc">Développement côté serveur selon les besoins.</p>
+      <ul class="skill-list icons-list">
+        <li><i class="devicon-php-plain colored"></i> PHP (Symfony)</li>
+        <li><i class="devicon-python-plain colored"></i> Python (Django)</li>
+        <li><i class="devicon-csharp-plain colored"></i> C# (ASP.NET)</li>
+        <li><i class="devicon-nodejs-plain colored"></i> Node.js</li>
+      </ul>
+    </article>
+
+    <!-- BASES DE DONNEES & SERVEURS -->
+    <article class="skill-card">
+      <h3><i class="fa-solid fa-database"></i> Bases de données & serveurs</h3>
+      <p class="skill-desc">Outils vus en formation et utilisés en projets.</p>
+      <ul class="skill-list icons-list">
+        <li><i class="devicon-mysql-plain colored"></i> MySQL Server</li>
+        <li><i class="devicon-ubuntu-plain colored"></i> Apache / IIS</li>
+        <li><i class="devicon-figma-plain colored"></i> UML & conception</li>
+      </ul>
+    </article>
+
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projects" class="section projects-section">
+  <div class="section-head">
+    <h2>Portfolio</h2>
+    <p>Quelques réalisations et exercices de développement.</p>
+  </div>
+
+  <div class="projects-grid">
+<!-- PROJET : Premier site HTML/CSS -->
+<article class="project-card">
+  <div class="project-thumb">
+    <img src="/images/projet-html-1.png" alt="Maquette CV développeur analyste en HTML/CSS">
+  </div>
+  <div class="project-body">
+    <h3>Ma première page HTML/CSS</h3>
+    <p>
+      Page de présentation avec sections “Qui suis-je ?”, “Mon parcours”, “Ma formation” et un formulaire de contact.
+      Travail surtout sur la mise en page, les cartes arrondies et les couleurs.
+    </p>
+    <div class="project-tags">
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>Maquette</span>
+    </div>
+    <div class="project-actions">
+      <span class="btn ghost small" aria-disabled="true">
+        Voir le projet
+      </span>
+      <a href="https://github.com/AnnieLitoiu/First-Projet-HTML-CSS" target="_blank" class="btn primary small">
+        <i class="fa-brands fa-github"></i> Code source
+      </a>
+    </div>
+  </div>
+</article>
+
+<!-- PROJET 1 : quiz -->
+    <article class="project-card">
+      <div class="project-thumb">
+        <img src="/images/quiz-show.svg" alt="Projet Quiz Symfony">
+      </div>
+      <div class="project-body">
+        <h3>Quiz en PHP / Symfony</h3>
+        <p>
+          Application de quiz avec gestion des questions, logique côté serveur et rendu dynamique.
+          Projet réalisé en PHP avec le framework Symfony, selon l’architecture MVC.
+        </p>
+        <div class="project-tags">
+          <span>PHP</span>
+          <span>Symfony</span>
+          <span>MySQL</span>
+        </div>
+        <div class="project-actions">
+          <a href="http://wad05.interface3.be/login" target="_blank" class="btn ghost small">
+        Voir le projet</a>
+          <a href="https://github.com/AnnieLitoiu/ProjetFinal-Annie" target="_blank" class="btn primary small">
+            <i class="fa-brands fa-github"></i> Code source
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJET : Le Seau d’Eau -->
+    <article class="project-card">
+      <div class="project-thumb">
+        <img src="/images/seau.png" alt="Jeu Le Seau d’Eau en HTML, CSS et JavaScript">
+      </div>
+      <div class="project-body">
+        <h3>Le Seau d’Eau</h3>
+        <p>
+          Mini-jeu interactif développé en HTML, CSS et JavaScript. 
+          Vous incarnez un seau vide qui doit trouver une source d’eau et arroser la plante au centre du plateau.
+          Les déplacements se font dans toutes les directions, et des cases bloquées apparaissent de manière aléatoire.
+          Ce projet illustre la logique de jeu, la manipulation du DOM et les interactions dynamiques côté client.
+        </p>
+        <div class="project-tags">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+          <span>Game</span>
+        </div>
+        <div class="project-actions">
+          <a  target="_blank" class="btn ghost small">
+            Voir le projet
+          </a>
+          <a href="https://github.com/AnnieLitoiu/Le-Seau-d-Eau" target="_blank" class="btn primary small">
+            <i class="fa-brands fa-github"></i> Code source
+          </a>
+        </div>
+      </div>
+    </article>
+
+  <!-- PROJET : Portfolio Annie -->
+  <article class="project-card">
+    <div class="project-thumb">
+      <img src="/images/portfolio.png" alt="Portfolio Annie - Web Developer Junior">
+    </div>
+    <div class="project-body">
+      <h3>Portfolio Annie</h3>
+      <p>
+        Site web personnel conçu pour présenter mon profil de développeuse web junior.
+        Réalisé en HTML, CSS et JavaScript, il met en avant mes compétences, mes projets et mon CV
+        avec un design moderne et des animations fluides.
+      </p>
+      <div class="project-tags">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>Design</span>
+      </div>
+      <div class="project-actions">
+        <a target="_blank" class="btn ghost small">
+          Voir le projet
+        </a>
+        <a href="https://github.com/AnnieLitoiu/Portfolio-Annie" target="_blank" class="btn primary small">
+          <i class="fa-brands fa-github"></i> Code source
+        </a>
+      </div>
+    </div>
+  </article>
+
+  </div>
+</section>
+
+ <!-- CONTACT -->
+<section id="contact" class="section contact-section">
+  <div class="section-head">
+    <h2>Contact</h2>
+    <p>Envie de collaborer ou d’en savoir plus ? Écrivez-moi ou connectons-nous 👇</p>
+  </div>
+
+  <div class="contact-container">
+    <!-- Formulaire -->
+    <form class="contact-form">
+      <input type="text" placeholder="Nom" required />
+      <input type="email" placeholder="Email" required />
+      <textarea rows="4" placeholder="Message" required></textarea>
+      <button type="submit" class="btn primary">
+        <i class="fa-solid fa-paper-plane"></i> Envoyer
+      </button>
+    </form>
+
+    <!-- Liens directs -->
+    <div class="contact-links">
+      <a href="mailto:anisoaralitoiu@gmail.com" target="_blank">
+        <i class="fa-solid fa-envelope"></i> Email
+      </a>
+      <a href="https://github.com/AnnieLitoiu" target="_blank">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/anisoara-litoiu/" target="_blank">
+        <i class="fa-brands fa-linkedin"></i> LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2025 Annie. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>
