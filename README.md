@@ -31,6 +31,7 @@ Ce portfolio a pour but de mettre en avant :
 ---
 
 ## 📂 Structure du projet
+```
 Portfolio-Annie/
 │
 ├── index.html # Page principale
@@ -45,3 +46,4 @@ Portfolio-Annie/
 │
 └── /files # Fichiers téléchargeables
 └── CV-Anisoara-Litoiu.pdf
+```

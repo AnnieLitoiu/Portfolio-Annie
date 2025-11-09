@@ -127,7 +127,7 @@ if (heroCanvas) {
   let particles = [];
 
   // 👉 tu changes ça pour avoir plus ou moins de points de base
-  const BASE_PARTICLE_COUNT = 240;
+  const BASE_PARTICLE_COUNT = 200;
 
   // 👉 si tu laisses à true, il va en rajouter un peu sur grands écrans
   const USE_AUTO_DENSITY = true;
