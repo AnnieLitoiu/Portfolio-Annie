@@ -106,13 +106,6 @@ script.js
 images/
 files/
 
----
-
-## Run the Project
-
-```bash
-open index.html
-
 
 ---
 
@@ -157,8 +150,4 @@ Acest portofoliu a fost realizat pentru:
 
 ---
 
-## Rulare
 
-```bash
-
-open index.html
