@@ -82,7 +82,7 @@ const i18nTranslations = {
     "nav.projects": "Portfolio",
     "nav.contact": "Contact",
 
-    // HERO (sans hero.intro, on laisse “Hi, I'm Annie” en dur dans le HTML)
+    // HERO
     "hero.title": "Développeuse Web Junior",
     "hero.subtitle":
       "Je conçois des expériences digitales uniques grâce à un design innovant et un code soigné. Je transforme les idées en sites et applications à la fois beaux, modernes, accessibles et faciles à maintenir.",
@@ -143,6 +143,7 @@ const i18nTranslations = {
     "contact.link.email": "Email",
     "contact.link.github": "GitHub",
     "contact.link.linkedin": "LinkedIn",
+    "contact.form.confirm": "Merci, votre message a bien été enregistré.",
 
     // PROJECTS – section
     "projects.title": "Portfolio",
@@ -252,6 +253,7 @@ const i18nTranslations = {
     "contact.link.email": "Email",
     "contact.link.github": "GitHub",
     "contact.link.linkedin": "LinkedIn",
+    "contact.form.confirm": "Thank you, your message has been recorded.",
 
     "projects.title": "Portfolio",
     "projects.subtitle": "Some projects and development exercises.",
@@ -353,6 +355,7 @@ const i18nTranslations = {
     "contact.link.email": "Email",
     "contact.link.github": "GitHub",
     "contact.link.linkedin": "LinkedIn",
+    "contact.form.confirm": "Mulțumesc, mesajul tău a fost înregistrat.",
 
     "projects.title": "Portofoliu",
     "projects.subtitle": "Câteva proiecte și exerciții de dezvoltare.",
@@ -390,11 +393,11 @@ const i18nTranslations = {
   }
 };
 
-let i18nLang = localStorage.getItem("lang") || "FR";
+// 👉 FR PAR DÉFAUT, SANS LOCALSTORAGE
+let i18nLang = "FR";
 
 function applyI18n(lang) {
   i18nLang = lang;
-  localStorage.setItem("lang", lang);
 
   const dict = i18nTranslations[lang];
   if (!dict) return;
@@ -424,6 +427,8 @@ function setupI18n() {
 
   const langBtn = document.getElementById("lang-btn");
   const langMenu = document.getElementById("lang-menu");
+
+  if (!langBtn || !langMenu) return;
 
   langBtn.addEventListener("click", e => {
     e.stopPropagation();
@@ -456,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!el) return;
 
-  const dict = i18nTranslations[i18nLang];
+  const dict = i18nTranslations[i18nLang] || i18nTranslations.FR;
   const text = dict["hero.title"] || "Web Developer Junior";
 
   el.textContent = "";
@@ -467,7 +472,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent += text.charAt(i);
       i++;
       setTimeout(type, 80);
-    } else {
+    } else if (cursor) {
       cursor.style.display = "none";
     }
   }
@@ -576,3 +581,48 @@ accordionItems.forEach(item => {
     item.classList.toggle("active");
   });
 });
+
+/*******************************
+ * CONTACT FORM CONFIRMATION
+ *******************************/
+const contactForm = document.querySelector(".contact-form");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault(); // on bloque l’envoi réel
+
+    const statusEl = document.getElementById("form-status");
+    if (statusEl) {
+      const dict = i18nTranslations[i18nLang] || i18nTranslations.FR;
+      statusEl.textContent = dict["contact.form.confirm"] ||
+        "Merci, votre message a bien été enregistré.";
+      statusEl.classList.add("visible");
+    }
+
+    contactForm.reset();
+  });
+}
+
+/*******************************
+ * PARALLAXE AVATAR HERO
+ *******************************/
+(function setupHeroParallax() {
+  const avatar = document.querySelector(".hero-avatar");
+  if (!avatar) return;
+
+  // Limite du mouvement (en pixels)
+  const maxMove = 20;
+
+  // Désactiver sur mobile
+  if (window.innerWidth < 768) return;
+
+  window.addEventListener("mousemove", (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 2; 
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+    const moveX = -x * maxMove;
+    const moveY = -y * maxMove;
+
+    avatar.style.transform = `translate(${moveX}px, ${moveY}px)`;
+  });
+})();

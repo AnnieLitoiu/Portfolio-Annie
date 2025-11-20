@@ -41,19 +41,24 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  margin: 0;
+  padding-top: 70px;
 }
 
 /* =========================================================
    3. HEADER / TOPBAR
    ========================================================= */
 .topbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 50;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: rgba(15, 23, 23, 0.85);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1.5rem;
   padding: 0.75rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
@@ -376,7 +381,10 @@ body {
   height: 340px;
   display: grid;
   place-items: center;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
+
 .hero-avatar img {
   width: 350px;
   height: 350px;
@@ -908,4 +916,16 @@ p {
 .accordion-panel p {
   font-size: 1rem;
   line-height: 1.65;
+}
+
+.form-status {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: var(--accent-color, #0E7478);
+}
+
+.form-status.visible {
+  opacity: 1;
 }

@@ -17,40 +17,40 @@
 <body>
 
   <!-- HEADER -->
-  <header class="topbar" id="topbar">
-    <a href="#home" class="brand">
-      <span class="brand-accent">Annie</span><span class="brand-main">Code</span>
-    </a>
+ <header class="topbar" id="topbar">
+  <a href="#home" class="brand">
+    <span class="brand-accent">Annie</span><span class="brand-main">Code</span>
+  </a>
 
-    <!-- NAVIGATION CENTRALE -->
-    <nav class="main-nav" id="main-nav">
-      <a href="#home" class="nav-link active" data-i18n="nav.home">Accueil</a>
-      <a href="#skills" class="nav-link" data-i18n="nav.skills">Compétences</a>
-      <a href="#projects" class="nav-link" data-i18n="nav.projects">Portfolio</a>
-      <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
-    </nav>
+  <nav class="main-nav" id="main-nav">
+    <a href="#home" class="nav-link active" data-i18n="nav.home">Accueil</a>
+    <a href="#skills" class="nav-link" data-i18n="nav.skills">Compétences</a>
+    <a href="#projects" class="nav-link" data-i18n="nav.projects">Portfolio</a>
+    <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+  </nav>
 
-    <!-- ACTIONS À DROITE (LANGUE / THEME / BURGER) -->
-    <div class="top-actions">
-      <div class="lang-group" id="lang-group">
-        <button class="lang-btn" id="lang-btn">
-          <span id="current-lang">FR</span>
-          <i class="fa-solid fa-chevron-down"></i>
-        </button>
-        <div class="lang-menu" id="lang-menu">
-          <button data-lang="FR">FR</button>
-          <button data-lang="EN">EN</button>
-          <button data-lang="RO">RO</button>
-        </div>
+  <div class="top-actions">
+    <div class="lang-group" id="lang-group">
+      <button class="lang-btn" id="lang-btn">
+        <span id="current-lang">FR</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button data-lang="FR">FR</button>
+        <button data-lang="EN">EN</button>
+        <button data-lang="RO">RO</button>
       </div>
-      <button class="theme-btn" id="theme-btn">
-        <i class="fa-solid fa-sun"></i>
-      </button>
-      <button class="burger" id="burger" aria-label="Ouvrir le menu">
-        <span></span><span></span><span></span>
-      </button>
     </div>
-  </header>
+
+    <button class="theme-btn" id="theme-btn">
+      <i class="fa-solid fa-sun"></i>
+    </button>
+
+    <button class="burger" id="burger" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
 
   <!-- HERO -->
   <section id="home" class="hero section">
@@ -397,6 +397,7 @@
           <i class="fa-solid fa-paper-plane"></i>
           <span data-i18n="contact.form.submit">Envoyer</span>
         </button>
+        <p id="form-status" class="form-status" data-i18n="contact.form.confirm"></p>
       </form>
 
       <!-- Liens directs -->
