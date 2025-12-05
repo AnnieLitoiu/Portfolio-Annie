@@ -491,7 +491,7 @@ if (heroCanvas) {
 
   const BASE = 200;
   const DENSITY = 0.00022;
-  const MAX_DIST = 150;
+  const MAX_DIST = 180;
 
   function resizeCanvas() {
     const home = document.getElementById("home");
@@ -588,18 +588,13 @@ accordionItems.forEach(item => {
 const contactForm = document.querySelector(".contact-form");
 
 if (contactForm) {
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault(); // on bloque l’envoi réel
-
+  contactForm.addEventListener("submit", () => {
     const statusEl = document.getElementById("form-status");
     if (statusEl) {
       const dict = i18nTranslations[i18nLang] || i18nTranslations.FR;
-      statusEl.textContent = dict["contact.form.confirm"] ||
-        "Merci, votre message a bien été enregistré.";
+      statusEl.textContent = dict["contact.form.confirm"];
       statusEl.classList.add("visible");
     }
-
-    contactForm.reset();
   });
 }
 

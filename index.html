@@ -383,22 +383,29 @@
 
     <div class="contact-container">
       <!-- Formulaire -->
-      <form class="contact-form">
-        <input type="text" required
-               placeholder="Nom"
-               data-i18n-placeholder="contact.form.name" />
-        <input type="email" required
-               placeholder="Email"
-               data-i18n-placeholder="contact.form.email" />
-        <textarea rows="4" required
+      <form class="contact-form" 
+            action="https://formsubmit.co/anisoaralitoiu@gmail.com" 
+            method="POST">
+        <input type="text" name="name" required
+              placeholder="Nom"
+              data-i18n-placeholder="contact.form.name" />
+        <input type="email" name="email" required
+              placeholder="Email"
+              data-i18n-placeholder="contact.form.email" />
+        <textarea rows="4" name="message" required
                   placeholder="Message"
                   data-i18n-placeholder="contact.form.message"></textarea>
+
+        <input type="hidden" name="_subject" value="Nouveau message depuis le portfolio Annie">
+        <input type="hidden" name="_captcha" value="false">
+
         <button type="submit" class="btn primary">
           <i class="fa-solid fa-paper-plane"></i>
           <span data-i18n="contact.form.submit">Envoyer</span>
         </button>
         <p id="form-status" class="form-status" data-i18n="contact.form.confirm"></p>
       </form>
+
 
       <!-- Liens directs -->
       <div class="contact-links">
