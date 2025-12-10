@@ -663,7 +663,7 @@ body {
 }
 
 .project-tags span {
-  font-size: 1 rem;      
+  font-size: 1rem;      
   font-weight: 600;       
   color: var(--text);     
   padding: 0;
@@ -978,37 +978,18 @@ p {
   border-radius: 0 !important;
   box-shadow: none !important;
 }
-
-/* 3. Bullets toujours ronds et jolis */
-#fp-nav ul li a span,
-#fp-nav ul li a.active span {
-  background: var(--accent) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-}
-
-/* 4. Ajuster la couleur du bullet actif en mode clair (optionnel) */
-[data-theme="light"] #fp-nav ul li a.active span {
-  background: #0f1717 !important; /* couleur sombre en light mode */
-}
-/* =========================================================
-   FULLPAGE NAV – ALIGNEMENT PARFAIT DES BULLETS
-   ========================================================= */
-
-/* Taille identique pour tous les bullets (actif ou pas) */
+/* Bullets fullPage toujours alignés et identiques */
 #fp-nav ul li a span,
 #fp-nav ul li a.active span {
   width: 10px !important;
   height: 10px !important;
   border-radius: 50% !important;
   background: var(--accent) !important;
-  margin: 6px 0 !important; /* espacement uniforme */
-  transform: none !important; /* évite l'effet de zoom */
-}
-
-/* Supprime l’effet d’agrandissement du bullet actif */
-#fp-nav ul li a.active span {
+  margin: 6px 0 !important;
   transform: none !important;
-  background: var(--accent) !important; /* même couleur */
+}
+
+/* Couleur du bullet actif en light mode (optionnel) */
+[data-theme="light"] #fp-nav ul li a.active span {
+  background: #0f1717 !important;
 }
