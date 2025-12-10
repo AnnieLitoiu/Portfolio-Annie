@@ -1,55 +1,54 @@
+// ordre fixe des sections dans la page
+const SECTION_INDEX = {
+  home: 1,
+  about: 2,
+  skills: 3,
+  projects: 4,
+  contact: 5
+};
+
 /*******************************
- * NAVIGATION + SCROLL
+ * NAVIGATION + SCROLL (fullPage piloté par index)
  *******************************/
-const scrollLinks = document.querySelectorAll(".nav-link, .hero-actions a, .about-intro a");
 const navLinks = document.querySelectorAll(".nav-link");
 
+// tous les liens qui doivent scroller
+const scrollLinks = document.querySelectorAll(".nav-link, .hero-actions a, .about-intro a");
+
 scrollLinks.forEach(link => {
-  link.addEventListener("click", e => {
+  link.addEventListener("click", (e) => {
     const href = link.getAttribute("href");
-    if (href && href.startsWith("#")) {
-      e.preventDefault();
-      const id = href.substring(1);
+    if (!href || !href.startsWith("#")) return;
+
+    e.preventDefault();
+
+    const id = href.substring(1);              // "home", "about", ...
+    const index = SECTION_INDEX[id];           // 1,2,3,4,5
+
+    if (window.fullpage_api && index) {
+      // 👉 on demande à fullPage d'aller à l'index, pas à l'ancre
+      fullpage_api.moveTo(index);
+    } else {
+      // fallback sans fullPage
       const target = document.getElementById(id);
       if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 60,
-          behavior: "smooth"
-        });
+        target.scrollIntoView({ behavior: "smooth" });
       }
-      const navEl = document.getElementById("main-nav");
-      const burgerEl = document.getElementById("burger");
-      if (navEl) navEl.classList.remove("open");
-      if (burgerEl) burgerEl.classList.remove("open");
     }
-  });
-});
 
-// mettre la classe active au scroll
-window.addEventListener("scroll", () => {
-  const scrollPos = window.scrollY + 80;
-  document.querySelectorAll("section[id]").forEach(sec => {
-    if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetHeight + sec.offsetTop) {
-      const id = sec.getAttribute("id");
+    // gérer la classe active sur le menu
+    if (link.classList.contains("nav-link")) {
       navLinks.forEach(l => l.classList.remove("active"));
-      const current = document.querySelector(`.nav-link[href="#${id}"]`);
-      if (current) current.classList.add("active");
+      link.classList.add("active");
     }
+
+    // fermer le burger sur mobile
+    const navEl = document.getElementById("main-nav");
+    const burgerEl = document.getElementById("burger");
+    if (navEl) navEl.classList.remove("open");
+    if (burgerEl) burgerEl.classList.remove("open");
   });
 });
-
-/*******************************
- * BURGER
- *******************************/
-const burger = document.getElementById("burger");
-const nav = document.getElementById("main-nav");
-
-if (burger && nav) {
-  burger.addEventListener("click", () => {
-    nav.classList.toggle("open");
-    burger.classList.toggle("open");
-  });
-}
 
 /*******************************
  * THEME
@@ -453,38 +452,12 @@ function setupI18n() {
 setupI18n();
 
 /*******************************
- * TEXTE TAPÉ
+ * PARTICULES (CANVAS HERO)
  *******************************/
-document.addEventListener("DOMContentLoaded", () => {
-  const el = document.getElementById("typed-text");
-  const cursor = document.getElementById("typed-cursor");
+function setupHeroParticles() {
+  const heroCanvas = document.getElementById("hero-bg");
+  if (!heroCanvas) return;
 
-  if (!el) return;
-
-  const dict = i18nTranslations[i18nLang] || i18nTranslations.FR;
-  const text = dict["hero.title"] || "Web Developer Junior";
-
-  el.textContent = "";
-  let i = 0;
-
-  function type() {
-    if (i < text.length) {
-      el.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, 80);
-    } else if (cursor) {
-      cursor.style.display = "none";
-    }
-  }
-
-  type();
-});
-
-/*******************************
- * PARTICULES (CANVAS)
- *******************************/
-const heroCanvas = document.getElementById("hero-bg");
-if (heroCanvas) {
   const ctx = heroCanvas.getContext("2d");
   let w = 0, h = 0;
   let particles = [];
@@ -492,16 +465,6 @@ if (heroCanvas) {
   const BASE = 200;
   const DENSITY = 0.00022;
   const MAX_DIST = 180;
-
-  function resizeCanvas() {
-    const home = document.getElementById("home");
-    const rect = home.getBoundingClientRect();
-
-    w = heroCanvas.width = window.innerWidth;
-    h = heroCanvas.height = rect.height;
-
-    createParticles();
-  }
 
   function getCount() {
     const auto = Math.floor(w * h * DENSITY);
@@ -520,6 +483,16 @@ if (heroCanvas) {
         dy: (Math.random() - 0.5) * 0.35
       });
     }
+  }
+
+  function resizeCanvas() {
+    const home = document.getElementById("home");
+    const rect = home ? home.getBoundingClientRect() : { height: window.innerHeight };
+
+    w = heroCanvas.width = window.innerWidth;
+    h = heroCanvas.height = rect.height || window.innerHeight;
+
+    createParticles();
   }
 
   function animate() {
@@ -563,61 +536,51 @@ if (heroCanvas) {
   }
 
   window.addEventListener("resize", resizeCanvas);
-  window.addEventListener("load", resizeCanvas);
   resizeCanvas();
   animate();
 }
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof fullpage !== 'undefined') {
+    new fullpage('#fullpage', {
+      // Navigation
+      navigation: true,
+      navigationPosition: 'right',
+      navigationTooltips: ['Accueil', 'À propos', 'Compétences', 'Portfolio', 'Contact'],
+      showActiveTooltip: true,
 
-/*******************************
- * ACCORDÉON
- *******************************/
-const accordionItems = document.querySelectorAll(".accordion-item");
-accordionItems.forEach(item => {
-  const header = item.querySelector(".accordion-header");
-  header.addEventListener("click", () => {
-    accordionItems.forEach(i => {
-      if (i !== item) i.classList.remove("active");
+      // Scrolling
+      scrollingSpeed: 700,
+      autoScrolling: true,
+      fitToSection: true,
+      fitToSectionDelay: 600,
+      scrollBar: false,
+
+      // Accessibility
+      keyboardScrolling: true,
+      animateAnchor: false,
+      recordHistory: false,
+
+      // Design
+      verticalCentered: true,
+      paddingTop: '60px',
+      sectionSelector: '.section',
+
+      onLeave(origin, destination, direction) {
+        const links = Array.from(document.querySelectorAll('.nav-link'));
+        links.forEach(l => l.classList.remove('active'));
+
+        const active = links[destination.index];
+        if (active) active.classList.add('active');
+      },
+
+      // 👉 quand fullPage a fini de poser les hauteurs,
+      // on peut calculer la taille du canvas et lancer les particules
+      afterRender() {
+        setupHeroParticles();
+      }
     });
-    item.classList.toggle("active");
-  });
+  } else {
+    // 👉 au cas où fullPage n’est pas chargé (fallback simple)
+    setupHeroParticles();
+  }
 });
-
-/*******************************
- * CONTACT FORM CONFIRMATION
- *******************************/
-const contactForm = document.querySelector(".contact-form");
-
-if (contactForm) {
-  contactForm.addEventListener("submit", () => {
-    const statusEl = document.getElementById("form-status");
-    if (statusEl) {
-      const dict = i18nTranslations[i18nLang] || i18nTranslations.FR;
-      statusEl.textContent = dict["contact.form.confirm"];
-      statusEl.classList.add("visible");
-    }
-  });
-}
-
-/*******************************
- * PARALLAXE AVATAR HERO
- *******************************/
-(function setupHeroParallax() {
-  const avatar = document.querySelector(".hero-avatar");
-  if (!avatar) return;
-
-  // Limite du mouvement (en pixels)
-  const maxMove = 20;
-
-  // Désactiver sur mobile
-  if (window.innerWidth < 768) return;
-
-  window.addEventListener("mousemove", (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 2; 
-    const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-    const moveX = -x * maxMove;
-    const moveY = -y * maxMove;
-
-    avatar.style.transform = `translate(${moveX}px, ${moveY}px)`;
-  });
-})();

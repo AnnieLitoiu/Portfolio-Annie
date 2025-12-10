@@ -5,6 +5,11 @@
   <title data-i18n="site.title">Portfolio Annie – Développeuse Web Junior</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <!-- fullPage.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
+  <!-- fullPage enhancements -->
+  <link rel="stylesheet" href="fullpage-enhancements.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
   <script defer src="script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -23,11 +28,12 @@
   </a>
 
   <nav class="main-nav" id="main-nav">
-    <a href="#home" class="nav-link active" data-i18n="nav.home">Accueil</a>
-    <a href="#skills" class="nav-link" data-i18n="nav.skills">Compétences</a>
-    <a href="#projects" class="nav-link" data-i18n="nav.projects">Portfolio</a>
-    <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
-  </nav>
+  <a href="#home" data-menuanchor="home" class="nav-link active" data-i18n="nav.home">Accueil</a>
+  <a href="#about" data-menuanchor="about" class="nav-link" data-i18n="nav.about">A propos</a>
+  <a href="#skills" data-menuanchor="skills" class="nav-link" data-i18n="nav.skills">Compétences</a>
+  <a href="#projects" data-menuanchor="projects" class="nav-link" data-i18n="nav.projects">Portfolio</a>
+  <a href="#contact" data-menuanchor="contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+</nav>
 
   <div class="top-actions">
     <div class="lang-group" id="lang-group">
@@ -52,375 +58,380 @@
   </div>
 </header>
 
-  <!-- HERO -->
-  <section id="home" class="hero section">
-    <canvas id="hero-bg"></canvas>
-    <div class="hero-container">
-      <div class="hero-content">
-        <p class="tag-en big-intro">
-          Hi, I'm <span class="name-highlight">Annie</span>
-        </p>
-        <h1 class="typed-wrapper">
-          <span id="typed-text" data-i18n="hero.title"></span>
-          <span class="typed-cursor" id="typed-cursor"></span>
-        </h1>
-        <p class="subtitle" data-i18n="hero.subtitle">
-          Je conçois des expériences digitales uniques grâce à un design innovant et un code soigné.
-          Je transforme les idées en sites et applications à la fois beaux, modernes, accessibles et faciles à maintenir.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#projects" class="btn primary" data-i18n="hero.btnPortfolio">Voir mon portfolio</a>
-          <a href="#contact" class="btn ghost" id="contact-btn" data-i18n="hero.btnContact">Me contacter</a>
-        </div>
-      </div>
-
-      <div class="hero-avatar">
-        <div class="avatar-glow"></div>
-        <img src="/images/annie.jpg" alt="Avatar d’Annie" />
-      </div>
-    </div>
-  </section>
-
-  <!-- A PROPOS -->
-  <section id="about" class="section about-section">
-    <div class="section-head">
-      <h2 data-i18n="about.title">Qui suis-je ?</h2>
-      <p data-i18n="about.subtitle">Quelques infos sur mon parcours et ma façon de travailler.</p>
-    </div>
-
-    <div class="about-grid">
-      <!-- colonne gauche : mini intro -->
-      <div class="about-intro">
-        <h3 class="about-name" data-i18n="about.name">AnnieCode</h3>
-        <p class="about-text" data-i18n="about.text1">
-          Développeuse web junior en reconversion, passionnée par la création d’interfaces modernes et accessibles.
-          J’aime transformer une idée en un produit clair, bien structuré et facile à faire évoluer.
-        </p>
-        <p class="about-highlight" data-i18n="about.highlight">
-          Actuellement à la recherche d’un stage / de premiers projets pour mettre en pratique mes compétences.
-        </p>
-        <a href="#contact" class="btn primary" data-i18n="about.btnWork">Travaillons ensemble</a>
-        <a href="/files/CV_LITOIU_Anisoara.pdf" class="btn ghost" download>
-          <i class="fa-solid fa-download"></i>
-          <span data-i18n="about.btnCV">Télécharger mon CV</span>
-        </a>
-      </div>
-
-      <!-- colonne droite : accordéon -->
-      <div class="about-accordion" id="about-accordion">
-        <article class="accordion-item active">
-          <button class="accordion-header">
-            <span data-i18n="about.accordion.path.title">Mon parcours</span>
-            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
-          </button>
-          <div class="accordion-panel">
-            <p data-i18n="about.accordion.path.text">
-              Issue d’un parcours polyvalent, je me suis orientée vers le développement web pour associer créativité
-              et logique. Formée aux bases du web (HTML, CSS, JavaScript) ainsi qu’aux outils modernes, je souhaite
-              continuer à apprendre au contact d’une équipe.
-            </p>
-          </div>
-        </article>
-
-        <article class="accordion-item">
-          <button class="accordion-header">
-            <span data-i18n="about.accordion.skills.title">Ce que je sais faire</span>
-            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
-          </button>
-          <div class="accordion-panel">
-            <p data-i18n="about.accordion.skills.text">
-              Intégration de maquettes responsives, création de pages dynamiques en JavaScript, utilisation de frameworks front, conception et gestion de bases de données, avec une attention particulière à l’accessibilité et au design.
-            </p>
-          </div>
-        </article>
-
-        <article class="accordion-item">
-          <button class="accordion-header">
-            <span data-i18n="about.accordion.search.title">Ce que je recherche</span>
-            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
-          </button>
-          <div class="accordion-panel">
-            <p data-i18n="about.accordion.search.text">
-              Un environnement où je peux contribuer à de vrais projets, développer mes compétences tant en front-end qu’en back-end, tout en apportant mon sens de l’organisation, de la rigueur et de la communication.
-            </p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMPETENCES -->
-  <section id="skills" class="section skills-section">
-    <div class="section-head">
-      <h2 data-i18n="skills.title">Compétences</h2>
-      <p data-i18n="skills.subtitle">Les technologies que j’utilise, d’après mon parcours.</p>
-    </div>
-
-    <div class="skills-grid">
-
-      <!-- FRONT-END -->
-      <article class="skill-card">
-        <h3>
-          <i class="fa-solid fa-code"></i>
-          <span data-i18n="skills.frontend.title">Front-end</span>
-        </h3>
-        <p class="skill-desc" data-i18n="skills.frontend.desc">
-          Création d’interfaces modernes et responsives.
-        </p>
-        <ul class="skill-list icons-list">
-          <li><i class="devicon-html5-plain colored"></i> <span data-i18n="skills.frontend.html">HTML5</span></li>
-          <li><i class="devicon-css3-plain colored"></i> <span data-i18n="skills.frontend.css">CSS3</span></li>
-          <li><i class="devicon-javascript-plain colored"></i> <span data-i18n="skills.frontend.js">JavaScript</span></li>
-          <li><i class="devicon-react-original colored"></i> <span data-i18n="skills.frontend.react">React (bases)</span></li>
-          <li><i class="devicon-angularjs-plain colored"></i> <span data-i18n="skills.frontend.angular">Angular</span></li>
-        </ul>
-      </article>
-
-      <!-- BACK-END -->
-      <article class="skill-card">
-        <h3>
-          <i class="fa-solid fa-gears"></i>
-          <span data-i18n="skills.backend.title">Back-end</span>
-        </h3>
-        <p class="skill-desc" data-i18n="skills.backend.desc">
-          Développement côté serveur selon les besoins.
-        </p>
-        <ul class="skill-list icons-list">
-          <li><i class="devicon-php-plain colored"></i> <span data-i18n="skills.backend.php">PHP (Symfony)</span></li>
-          <li><i class="devicon-python-plain colored"></i> <span data-i18n="skills.backend.python">Python (Django)</span></li>
-          <li><i class="devicon-csharp-plain colored"></i> <span data-i18n="skills.backend.csharp">C# (ASP.NET)</span></li>
-          <li><i class="devicon-nodejs-plain colored"></i> <span data-i18n="skills.backend.node">Node.js</span></li>
-        </ul>
-      </article>
-
-      <!-- BASES DE DONNÉES & SERVEURS -->
-      <article class="skill-card">
-        <h3>
-          <i class="fa-solid fa-database"></i>
-          <span data-i18n="skills.db.title">Bases de données & serveurs</span>
-        </h3>
-        <p class="skill-desc" data-i18n="skills.db.desc">
-          Outils vus en formation et utilisés en projets.
-        </p>
-        <ul class="skill-list icons-list">
-          <li><i class="devicon-mysql-plain colored"></i> <span data-i18n="skills.db.mysql">MySQL Server</span></li>
-          <li><i class="devicon-ubuntu-plain colored"></i> <span data-i18n="skills.db.apache">Apache / IIS</span></li>
-          <li><i class="devicon-figma-plain colored"></i> <span data-i18n="skills.db.uml">UML & conception</span></li>
-        </ul>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- PROJETS -->
-  <section id="projects" class="section projects-section">
-    <div class="section-head">
-      <h2 data-i18n="projects.title">Portfolio</h2>
-      <p data-i18n="projects.subtitle">Quelques réalisations et exercices de développement.</p>
-    </div>
-
-    <div class="projects-grid">
-      <!-- PROJET : Premier site HTML/CSS -->
-      <article class="project-card">
-        <div class="project-thumb">
-          <img src="/images/projet-html-1.png" alt="Maquette CV développeur analyste en HTML/CSS">
-        </div>
-        <div class="project-body">
-          <h3 data-i18n="projects.p1.title">Ma première page HTML/CSS</h3>
-          <p data-i18n="projects.p1.desc">
-            Page de présentation avec sections “Qui suis-je ?”, “Mon parcours”, “Ma formation” et un formulaire de contact.
-            Travail surtout sur la mise en page, les cartes arrondies et les couleurs.
-          </p>
-          <div class="project-tags">
-            <span data-i18n="projects.p1.tag.html">HTML</span>
-            <span data-i18n="projects.p1.tag.css">CSS</span>
-            <span data-i18n="projects.p1.tag.mockup">Maquette</span>
-          </div>
-          <div class="project-actions">
-            <a href="https://annielitoiu.github.io/First-Projet-HTML-CSS/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
-              Voir le projet
-            </a>
-            <a href="https://github.com/AnnieLitoiu/First-Projet-HTML-CSS" target="_blank" class="btn primary small">
-              <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- PROJET 2 : Quiz -->
-      <article class="project-card">
-        <div class="project-thumb">
-          <img src="/images/quiz-show.svg" alt="Projet Quiz Symfony">
-        </div>
-        <div class="project-body">
-          <h3 data-i18n="projects.p2.title">Quiz en PHP / Symfony</h3>
-          <p data-i18n="projects.p2.desc">
-            Application de quiz avec gestion des questions, logique côté serveur et rendu dynamique.
-            Projet réalisé en PHP avec le framework Symfony, selon l’architecture MVC.
-          </p>
-          <div class="project-tags">
-            <span>PHP</span>
-            <span>Symfony</span>
-            <span>MySQL</span>
-            <span>Bootstrap</span>
-            <span>JavaScript</span>
-            <span>HTML</span>
-            <span>CSS</span>
-          </div>
-          <div class="project-actions">
-            <a href="http://wad05.interface3.be/login" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
-              Voir le projet
-            </a>
-            <a href="https://github.com/AnnieLitoiu/ProjetFinal-Annie" target="_blank" class="btn primary small">
-              <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- PROJET : Le Seau d’Eau -->
-      <article class="project-card">
-        <div class="project-thumb">
-          <img src="/images/seau.png" alt="Jeu Le Seau d’Eau en HTML, CSS et JavaScript">
-        </div>
-        <div class="project-body">
-          <h3 data-i18n="projects.p3.title">Le Seau d’Eau</h3>
-          <p data-i18n="projects.p3.desc">
-            Mini-jeu interactif développé en HTML, CSS et JavaScript. 
-            Vous incarnez un seau vide qui doit trouver une source d’eau et arroser la plante au centre du plateau.
-            Les déplacements se font dans toutes les directions, et des cases bloquées apparaissent de manière aléatoire.
-            Ce projet illustre la logique de jeu et la manipulation du DOM.
-          </p>
-          <div class="project-tags">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span data-i18n="projects.p3.tag.game">Game</span>
-          </div>
-          <div class="project-actions">
-            <a href="https://annielitoiu.github.io/Le-Seau-d-Eau/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
-              Voir le projet
-            </a>
-            <a href="https://github.com/AnnieLitoiu/Le-Seau-d-Eau" target="_blank" class="btn primary small">
-              <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- PROJET : Portfolio Annie -->
-      <article class="project-card">
-        <div class="project-thumb">
-          <img src="/images/portfolio.png" alt="Portfolio Annie - Web Developer Junior">
-        </div>
-        <div class="project-body">
-          <h3 data-i18n="projects.p4.title">Portfolio Annie</h3>
-          <p data-i18n="projects.p4.desc">
-            Site web personnel conçu pour présenter mon profil de développeuse web junior.
-            Réalisé en HTML, CSS et JavaScript, il met en avant mes compétences, mes projets et mon CV
-            avec un design moderne et des animations fluides.
-          </p>
-          <div class="project-tags">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span data-i18n="projects.p4.tag.design">Design</span>
-          </div>
-          <div class="project-actions">
-            <a href="https://annielitoiu.github.io/Portfolio-Annie/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
-              Voir le projet
-            </a>
-            <a href="https://github.com/AnnieLitoiu/Portfolio-Annie" target="_blank" class="btn primary small">
-              <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
-            </a>
-          </div>
-        </div> 
-      </article>
+<!-- fullPage.js container -->
+  <div id="fullpage">
       
-      <!-- PROJET : MamanBudget -->
-      <article class="project-card">
-        <div class="project-thumb">
-          <img src="/images/MamanBudget.png" alt="MamanSolo Project Preview">
-        </div>
-        <div class="project-body">
-          <h3 data-i18n="projects.p5.title">MamanBudget – Jeu éducatif</h3>
-          <p data-i18n="projects.p5.desc">
-            Développé dans le cadre d’un <strong>hackathon à Interface 3</strong>, 
-            MamanBudget est une application web éducative réalisée avec Symfony, 
-            qui simule la gestion d’un foyer monoparental sur un mois. 
-            J’ai contribué à la <strong>partie backend</strong>, notamment la 
-            modélisation de la base de données, la logique du jeu et 
-            la préparation des données finales.
+    <!-- HERO -->
+    <section id="home" class="hero section">
+      <canvas id="hero-bg"></canvas>
+      <div class="hero-container">
+        <div class="hero-content">
+          <p class="tag-en big-intro">
+            Hi, I'm <span class="name-highlight">Annie</span>
           </p>
-          <div class="project-tags">
-            <span>Symfony</span>
-            <span>PHP</span>
-            <span>MySQL</span>
-            <span data-i18n="projects.p5.tag.hackathon">Hackathon</span>
-          </div>
+          <h1 class="typed-wrapper">
+            <span id="typed-text" data-i18n="hero.title"></span>
+          </h1>
+          <p class="subtitle" data-i18n="hero.subtitle">
+            Je conçois des expériences digitales uniques grâce à un design innovant et un code soigné.
+            Je transforme les idées en sites et applications à la fois beaux, modernes, accessibles et faciles à maintenir.
+          </p>
 
-          <div class="project-actions">
-            <a href="https://annielitoiu.github.io/MamanBudget/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
-              Voir le projet
-            </a>
-            <a href="https://github.com/AnnieLitoiu/MamanBudget" target="_blank" class="btn primary small">
-              <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
-            </a>
+          <div class="hero-actions">
+            <a href="#projects" class="btn primary" data-i18n="hero.btnPortfolio">Voir mon portfolio</a>
+            <a href="#contact" class="btn ghost" id="contact-btn" data-i18n="hero.btnContact">Me contacter</a>
           </div>
         </div>
-      </article>
 
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section contact-section">
-    <div class="section-head">
-      <h2 data-i18n="contact.title">Contact</h2>
-      <p data-i18n="contact.subtitle">Envie de collaborer ou d’en savoir plus ? Écrivez-moi ou connectons-nous 👇</p>
-    </div>
-
-    <div class="contact-container">
-      <!-- Formulaire -->
-      <form class="contact-form" 
-            action="https://formsubmit.co/anisoaralitoiu@gmail.com" 
-            method="POST">
-        <input type="text" name="name" required
-              placeholder="Nom"
-              data-i18n-placeholder="contact.form.name" />
-        <input type="email" name="email" required
-              placeholder="Email"
-              data-i18n-placeholder="contact.form.email" />
-        <textarea rows="4" name="message" required
-                  placeholder="Message"
-                  data-i18n-placeholder="contact.form.message"></textarea>
-
-        <input type="hidden" name="_subject" value="Nouveau message depuis le portfolio Annie">
-        <input type="hidden" name="_captcha" value="false">
-
-        <button type="submit" class="btn primary">
-          <i class="fa-solid fa-paper-plane"></i>
-          <span data-i18n="contact.form.submit">Envoyer</span>
-        </button>
-        <p id="form-status" class="form-status" data-i18n="contact.form.confirm"></p>
-      </form>
-
-
-      <!-- Liens directs -->
-      <div class="contact-links">
-        <a href="mailto:anisoaralitoiu@gmail.com" target="_blank">
-          <i class="fa-solid fa-envelope"></i> <span data-i18n="contact.link.email">Email</span>
-        </a>
-        <a href="https://github.com/AnnieLitoiu" target="_blank">
-          <i class="fa-brands fa-github"></i> <span data-i18n="contact.link.github">GitHub</span>
-        </a>
-        <a href="https://www.linkedin.com/in/anisoara-litoiu/" target="_blank">
-          <i class="fa-brands fa-linkedin"></i> <span data-i18n="contact.link.linkedin">LinkedIn</span>
-        </a>
+        <div class="hero-avatar">
+          <div class="avatar-glow"></div>
+          <img src="/images/annie.jpg" alt="Avatar d’Annie" />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- A PROPOS -->
+    <section id="about" class="section about-section">
+      <div class="section-head">
+        <h2 data-i18n="about.title">Qui suis-je ?</h2>
+        <p data-i18n="about.subtitle">Quelques infos sur mon parcours et ma façon de travailler.</p>
+      </div>
+
+      <div class="about-grid">
+        <!-- colonne gauche : mini intro -->
+        <div class="about-intro">
+          <h3 class="about-name" data-i18n="about.name">AnnieCode</h3>
+          <p class="about-text" data-i18n="about.text1">
+            Développeuse web junior en reconversion, passionnée par la création d’interfaces modernes et accessibles.
+            J’aime transformer une idée en un produit clair, bien structuré et facile à faire évoluer.
+          </p>
+          <p class="about-highlight" data-i18n="about.highlight">
+            Actuellement à la recherche d’un stage / de premiers projets pour mettre en pratique mes compétences.
+          </p>
+          <a href="#contact" class="btn primary" data-i18n="about.btnWork">Travaillons ensemble</a>
+          <a href="/files/CV_LITOIU_Anisoara.pdf" class="btn ghost" download>
+            <i class="fa-solid fa-download"></i>
+            <span data-i18n="about.btnCV">Télécharger mon CV</span>
+          </a>
+        </div>
+
+        <!-- colonne droite : accordéon -->
+        <div class="about-accordion" id="about-accordion">
+          <article class="accordion-item active">
+            <button class="accordion-header">
+              <span data-i18n="about.accordion.path.title">Mon parcours</span>
+              <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+            </button>
+            <div class="accordion-panel">
+              <p data-i18n="about.accordion.path.text">
+                Issue d’un parcours polyvalent, je me suis orientée vers le développement web pour associer créativité
+                et logique. Formée aux bases du web (HTML, CSS, JavaScript) ainsi qu’aux outils modernes, je souhaite
+                continuer à apprendre au contact d’une équipe.
+              </p>
+            </div>
+          </article>
+
+          <article class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="about.accordion.skills.title">Ce que je sais faire</span>
+              <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+            </button>
+            <div class="accordion-panel">
+              <p data-i18n="about.accordion.skills.text">
+                Intégration de maquettes responsives, création de pages dynamiques en JavaScript, utilisation de frameworks front, conception et gestion de bases de données, avec une attention particulière à l’accessibilité et au design.
+              </p>
+            </div>
+          </article>
+
+          <article class="accordion-item">
+            <button class="accordion-header">
+              <span data-i18n="about.accordion.search.title">Ce que je recherche</span>
+              <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+            </button>
+            <div class="accordion-panel">
+              <p data-i18n="about.accordion.search.text">
+                Un environnement où je peux contribuer à de vrais projets, développer mes compétences tant en front-end qu’en back-end, tout en apportant mon sens de l’organisation, de la rigueur et de la communication.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPETENCES -->
+    <section id="skills" class="section skills-section">
+      <div class="section-head">
+        <h2 data-i18n="skills.title">Compétences</h2>
+        <p data-i18n="skills.subtitle">Les technologies que j’utilise, d’après mon parcours.</p>
+      </div>
+
+      <div class="skills-grid">
+
+        <!-- FRONT-END -->
+        <article class="skill-card">
+          <h3>
+            <i class="fa-solid fa-code"></i>
+            <span data-i18n="skills.frontend.title">Front-end</span>
+          </h3>
+          <p class="skill-desc" data-i18n="skills.frontend.desc">
+            Création d’interfaces modernes et responsives.
+          </p>
+          <ul class="skill-list icons-list">
+            <li><i class="devicon-html5-plain colored"></i> <span data-i18n="skills.frontend.html">HTML5</span></li>
+            <li><i class="devicon-css3-plain colored"></i> <span data-i18n="skills.frontend.css">CSS3</span></li>
+            <li><i class="devicon-javascript-plain colored"></i> <span data-i18n="skills.frontend.js">JavaScript</span></li>
+            <li><i class="devicon-react-original colored"></i> <span data-i18n="skills.frontend.react">React (bases)</span></li>
+            <li><i class="devicon-angularjs-plain colored"></i> <span data-i18n="skills.frontend.angular">Angular</span></li>
+          </ul>
+        </article>
+
+        <!-- BACK-END -->
+        <article class="skill-card">
+          <h3>
+            <i class="fa-solid fa-gears"></i>
+            <span data-i18n="skills.backend.title">Back-end</span>
+          </h3>
+          <p class="skill-desc" data-i18n="skills.backend.desc">
+            Développement côté serveur selon les besoins.
+          </p>
+          <ul class="skill-list icons-list">
+            <li><i class="devicon-php-plain colored"></i> <span data-i18n="skills.backend.php">PHP (Symfony)</span></li>
+            <li><i class="devicon-python-plain colored"></i> <span data-i18n="skills.backend.python">Python (Django)</span></li>
+            <li><i class="devicon-csharp-plain colored"></i> <span data-i18n="skills.backend.csharp">C# (ASP.NET)</span></li>
+            <li><i class="devicon-nodejs-plain colored"></i> <span data-i18n="skills.backend.node">Node.js</span></li>
+          </ul>
+        </article>
+
+        <!-- BASES DE DONNÉES & SERVEURS -->
+        <article class="skill-card">
+          <h3>
+            <i class="fa-solid fa-database"></i>
+            <span data-i18n="skills.db.title">Bases de données & serveurs</span>
+          </h3>
+          <p class="skill-desc" data-i18n="skills.db.desc">
+            Outils vus en formation et utilisés en projets.
+          </p>
+          <ul class="skill-list icons-list">
+            <li><i class="devicon-mysql-plain colored"></i> <span data-i18n="skills.db.mysql">MySQL Server</span></li>
+            <li><i class="devicon-ubuntu-plain colored"></i> <span data-i18n="skills.db.apache">Apache / IIS</span></li>
+            <li><i class="devicon-figma-plain colored"></i> <span data-i18n="skills.db.uml">UML & conception</span></li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- PROJETS -->
+    <section id="projects" class="section projects-section">
+      <div class="section-head">
+        <h2 data-i18n="projects.title">Portfolio</h2>
+        <p data-i18n="projects.subtitle">Quelques réalisations et exercices de développement.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- PROJET : Premier site HTML/CSS -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img src="/images/projet-html-1.png" alt="Maquette CV développeur analyste en HTML/CSS">
+          </div>
+          <div class="project-body">
+            <h3 data-i18n="projects.p1.title">Ma première page HTML/CSS</h3>
+            <p data-i18n="projects.p1.desc">
+              Page de présentation avec sections “Qui suis-je ?”, “Mon parcours”, “Ma formation” et un formulaire de contact.
+              Travail surtout sur la mise en page, les cartes arrondies et les couleurs.
+            </p>
+            <div class="project-tags">
+              <span data-i18n="projects.p1.tag.html">HTML</span>
+              <span data-i18n="projects.p1.tag.css">CSS</span>
+              <span data-i18n="projects.p1.tag.mockup">Maquette</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://annielitoiu.github.io/First-Projet-HTML-CSS/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
+                Voir le projet
+              </a>
+              <a href="https://github.com/AnnieLitoiu/First-Projet-HTML-CSS" target="_blank" class="btn primary small">
+                <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJET 2 : Quiz -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img src="/images/quiz-show.svg" alt="Projet Quiz Symfony">
+          </div>
+          <div class="project-body">
+            <h3 data-i18n="projects.p2.title">Quiz en PHP / Symfony</h3>
+            <p data-i18n="projects.p2.desc">
+              Application de quiz avec gestion des questions, logique côté serveur et rendu dynamique.
+              Projet réalisé en PHP avec le framework Symfony, selon l’architecture MVC.
+            </p>
+            <div class="project-tags">
+              <span>PHP</span>
+              <span>Symfony</span>
+              <span>MySQL</span>
+              <span>Bootstrap</span>
+              <span>JavaScript</span>
+              <span>HTML</span>
+              <span>CSS</span>
+            </div>
+            <div class="project-actions">
+              <a href="http://wad05.interface3.be/login" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
+                Voir le projet
+              </a>
+              <a href="https://github.com/AnnieLitoiu/ProjetFinal-Annie" target="_blank" class="btn primary small">
+                <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJET : Le Seau d’Eau -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img src="/images/seau.png" alt="Jeu Le Seau d’Eau en HTML, CSS et JavaScript">
+          </div>
+          <div class="project-body">
+            <h3 data-i18n="projects.p3.title">Le Seau d’Eau</h3>
+            <p data-i18n="projects.p3.desc">
+              Mini-jeu interactif développé en HTML, CSS et JavaScript. 
+              Vous incarnez un seau vide qui doit trouver une source d’eau et arroser la plante au centre du plateau.
+              Les déplacements se font dans toutes les directions, et des cases bloquées apparaissent de manière aléatoire.
+              Ce projet illustre la logique de jeu et la manipulation du DOM.
+            </p>
+            <div class="project-tags">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+              <span data-i18n="projects.p3.tag.game">Game</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://annielitoiu.github.io/Le-Seau-d-Eau/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
+                Voir le projet
+              </a>
+              <a href="https://github.com/AnnieLitoiu/Le-Seau-d-Eau" target="_blank" class="btn primary small">
+                <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJET : Portfolio Annie -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img src="/images/portfolio.png" alt="Portfolio Annie - Web Developer Junior">
+          </div>
+          <div class="project-body">
+            <h3 data-i18n="projects.p4.title">Portfolio Annie</h3>
+            <p data-i18n="projects.p4.desc">
+              Site web personnel conçu pour présenter mon profil de développeuse web junior.
+              Réalisé en HTML, CSS et JavaScript, il met en avant mes compétences, mes projets et mon CV
+              avec un design moderne et des animations fluides.
+            </p>
+            <div class="project-tags">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+              <span data-i18n="projects.p4.tag.design">Design</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://annielitoiu.github.io/Portfolio-Annie/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
+                Voir le projet
+              </a>
+              <a href="https://github.com/AnnieLitoiu/Portfolio-Annie" target="_blank" class="btn primary small">
+                <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
+              </a>
+            </div>
+          </div> 
+        </article>
+        
+        <!-- PROJET : MamanBudget -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img src="/images/MamanBudget.png" alt="MamanSolo Project Preview">
+          </div>
+          <div class="project-body">
+            <h3 data-i18n="projects.p5.title">MamanBudget – Jeu éducatif</h3>
+            <p data-i18n="projects.p5.desc">
+              Développé dans le cadre d’un <strong>hackathon à Interface 3</strong>, 
+              MamanBudget est une application web éducative réalisée avec Symfony, 
+              qui simule la gestion d’un foyer monoparental sur un mois. 
+              J’ai contribué à la <strong>partie backend</strong>, notamment la 
+              modélisation de la base de données, la logique du jeu et 
+              la préparation des données finales.
+            </p>
+            <div class="project-tags">
+              <span>Symfony</span>
+              <span>PHP</span>
+              <span>MySQL</span>
+              <span data-i18n="projects.p5.tag.hackathon">Hackathon</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://annielitoiu.github.io/MamanBudget/" target="_blank" class="btn ghost small" data-i18n="projects.btn.view">
+                Voir le projet
+              </a>
+              <a href="https://github.com/AnnieLitoiu/MamanBudget" target="_blank" class="btn primary small">
+                <i class="fa-brands fa-github"></i> <span data-i18n="projects.btn.code">Code source</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact-section">
+      <div class="section-head">
+        <h2 data-i18n="contact.title">Contact</h2>
+        <p data-i18n="contact.subtitle">Envie de collaborer ou d’en savoir plus ? Écrivez-moi ou connectons-nous 👇</p>
+      </div>
+
+      <div class="contact-container">
+        <!-- Formulaire -->
+        <form class="contact-form" 
+              action="https://formsubmit.co/anisoaralitoiu@gmail.com" 
+              method="POST">
+          <input type="text" name="name" required
+                placeholder="Nom"
+                data-i18n-placeholder="contact.form.name" />
+          <input type="email" name="email" required
+                placeholder="Email"
+                data-i18n-placeholder="contact.form.email" />
+          <textarea rows="4" name="message" required
+                    placeholder="Message"
+                    data-i18n-placeholder="contact.form.message"></textarea>
+
+          <input type="hidden" name="_subject" value="Nouveau message depuis le portfolio Annie">
+          <input type="hidden" name="_captcha" value="false">
+
+          <button type="submit" class="btn primary">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span data-i18n="contact.form.submit">Envoyer</span>
+          </button>
+          <p id="form-status" class="form-status" data-i18n="contact.form.confirm"></p>
+        </form>
+
+
+        <!-- Liens directs -->
+        <div class="contact-links">
+          <a href="mailto:anisoaralitoiu@gmail.com" target="_blank">
+            <i class="fa-solid fa-envelope"></i> <span data-i18n="contact.link.email">Email</span>
+          </a>
+          <a href="https://github.com/AnnieLitoiu" target="_blank">
+            <i class="fa-brands fa-github"></i> <span data-i18n="contact.link.github">GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/anisoara-litoiu/" target="_blank">
+            <i class="fa-brands fa-linkedin"></i> <span data-i18n="contact.link.linkedin">LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+ </div>
+  <!-- End fullPage.js container -->
 
   <footer class="footer">
     <p data-i18n="footer.text">© 2025 Annie. Tous droits réservés.</p>

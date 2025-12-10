@@ -272,7 +272,7 @@ body {
 }
 
 .typed-cursor {
-  display: inline-block;
+  display: none !important;
   width: 1px;
   background: var(--text);
   animation: blink 0.7s infinite;
@@ -374,25 +374,23 @@ body {
   box-shadow: 0 0 10px rgba(14, 116, 120, 0.25);
 }
 
-/* avatar rond avec double bord */
 .hero-avatar {
   position: relative;
-  width: 340px;
-  height: 340px;
-  display: grid;
-  place-items: center;
-  transition: transform 0.15s ease-out;
-  will-change: transform;
+  flex: 0 0 auto;          /* ne pas s'étirer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-avatar img {
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
+  width: 260px;            /* taille fixe, carrée */
+  height: 260px;
+  border-radius: 50%;      /* cercle parfait */
   object-fit: cover;
-  object-position: 50% 45%;
+  object-position: 50% 35%; /* ajuste un peu le visage */
   border: 10px solid var(--avatar-border);
   box-shadow: 0 0 0 4px var(--accent);
+  display: block;
 }
 
 /* titres de sections */
@@ -865,10 +863,18 @@ body {
   .hero {
     min-height: auto;
   }
+
   .hero-container {
-    flex-direction: column;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    max-width: 1100px;      
+    margin: 0 auto;         
+    padding: 0 3rem;       
+    box-sizing: border-box;
   }
+
   .hero-content {
     text-align: center;
   }
@@ -878,12 +884,12 @@ body {
 
   /* avatar plus petit */
   .hero-avatar {
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
   }
   .hero-avatar img {
-    width: 240px;
-    height: 240px;
+    width: 100%;
+    height: 100%;
   }
 
   /* à propos en 1 colonne */
@@ -944,4 +950,65 @@ p {
 
 .form-status.visible {
   opacity: 1;
+}
+
+/* Masquer le "Made with fullPage.js" */
+.fp-watermark,
+.fp-watermark a {
+  display: none !important;
+}
+
+#home .hero-avatar {
+  margin-right: 80px;
+}
+
+/* =========================================================
+   FULLPAGE NAV – FIX LIGHT MODE + REMOVE UGLY BOX
+   ========================================================= */
+
+/* 1. Rendre le texte (tooltips) visible en mode clair */
+[data-theme="light"] .fp-tooltip {
+  color: #0f1717 !important; /* texte foncé clairement lisible */
+}
+
+/* 2. Retirer le carré / fond autour du texte */
+.fp-tooltip {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 3. Bullets toujours ronds et jolis */
+#fp-nav ul li a span,
+#fp-nav ul li a.active span {
+  background: var(--accent) !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+}
+
+/* 4. Ajuster la couleur du bullet actif en mode clair (optionnel) */
+[data-theme="light"] #fp-nav ul li a.active span {
+  background: #0f1717 !important; /* couleur sombre en light mode */
+}
+/* =========================================================
+   FULLPAGE NAV – ALIGNEMENT PARFAIT DES BULLETS
+   ========================================================= */
+
+/* Taille identique pour tous les bullets (actif ou pas) */
+#fp-nav ul li a span,
+#fp-nav ul li a.active span {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: var(--accent) !important;
+  margin: 6px 0 !important; /* espacement uniforme */
+  transform: none !important; /* évite l'effet de zoom */
+}
+
+/* Supprime l’effet d’agrandissement du bullet actif */
+#fp-nav ul li a.active span {
+  transform: none !important;
+  background: var(--accent) !important; /* même couleur */
 }
