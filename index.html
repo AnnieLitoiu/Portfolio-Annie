@@ -5,6 +5,7 @@
   <title data-i18n="site.title">Portfolio Annie – Développeuse Web Junior</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <script defer src="translations.js"></script>
   <script defer src="script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -383,7 +384,9 @@
 
     <div class="contact-container">
       <!-- Formulaire -->
-      <form class="contact-form" 
+      <form 
+            id="contact-form"
+            class="contact-form" 
             action="https://formsubmit.co/anisoaralitoiu@gmail.com" 
             method="POST">
         <input type="text" name="name" required
