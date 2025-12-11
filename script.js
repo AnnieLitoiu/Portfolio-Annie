@@ -416,4 +416,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupHeroParticles();
     setupProjectsHorizontalScroll();
   }
+  
 });
