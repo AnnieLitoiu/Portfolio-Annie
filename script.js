@@ -383,8 +383,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Accessibility
       keyboardScrolling: true,
-      animateAnchor: false,
-      recordHistory: false,
+      animateAnchor: true,
+      recordHistory: true,
 
       // Design
       verticalCentered: true,
