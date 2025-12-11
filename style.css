@@ -986,6 +986,28 @@ p {
 }
 
 /* =========================================================
+   BARRE DE PROGRESSION SCROLL (FULLPAGE)
+   ========================================================= */
+.scroll-progress-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;                 /* épaisseur de la ligne */
+  z-index: 1500;               /* au-dessus du header */
+  pointer-events: none;        /* ne bloque pas les clics */
+}
+
+.scroll-progress-bar {
+  width: 100%;
+  height: 100%;
+  background: var(--accent);   /* turquoise du thème */
+  transform-origin: 0 50%;
+  transform: scaleX(0);        /* commence vide */
+  transition: transform 0.35s ease-out;
+}
+
+/* =========================================================
    FULLPAGE NAV – FIX LIGHT MODE + REMOVE UGLY BOX
    ========================================================= */
 

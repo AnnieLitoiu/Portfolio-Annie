@@ -5,6 +5,7 @@ const i18nTranslations = {
 
     // NAV
     "nav.home": "Accueil",
+    "nav.about": "À propos",
     "nav.skills": "Compétences",
     "nav.projects": "Portfolio",
     "nav.contact": "Contact",
@@ -119,6 +120,7 @@ const i18nTranslations = {
     "site.title": "Annie Portfolio – Junior Web Developer",
 
     "nav.home": "Home",
+    "nav.about": "About",
     "nav.skills": "Skills",
     "nav.projects": "Portfolio",
     "nav.contact": "Contact",
@@ -221,6 +223,7 @@ const i18nTranslations = {
     "site.title": "Portofoliul lui Annie – Dezvoltator Web Junior",
 
     "nav.home": "Acasă",
+    "nav.about": "Despre mine",
     "nav.skills": "Competențe",
     "nav.projects": "Portofoliu",
     "nav.contact": "Contact",

@@ -6,14 +6,16 @@ const SECTION_INDEX = {
   projects: 4,
   contact: 5
 };
+const TOTAL_SECTIONS = Object.keys(SECTION_INDEX).length;
+
 
 /*******************************
  * NAVIGATION + SCROLL (fullPage piloté par index)
  *******************************/
 const navLinks = document.querySelectorAll(".nav-link");
 
-// tous les liens qui doivent scroller
-const scrollLinks = document.querySelectorAll(".nav-link, .hero-actions a, .about-intro a");
+// tous les liens qui doivent scroller (inclut le logo .brand)
+const scrollLinks = document.querySelectorAll(".nav-link, .hero-actions a, .about-intro a, .brand");
 
 scrollLinks.forEach(link => {
   link.addEventListener("click", (e) => {
@@ -22,11 +24,11 @@ scrollLinks.forEach(link => {
 
     e.preventDefault();
 
-    const id = href.substring(1);              // "home", "about", ...
-    const index = SECTION_INDEX[id];           // 1,2,3,4,5
+    const id = href.substring(1);             // "home", "about", ...
+    const index = SECTION_INDEX[id];          // 1,2,3,4,5
 
     if (window.fullpage_api && index) {
-      // 👉 on demande à fullPage d'aller à l'index, pas à l'ancre
+      // 👉 pilotage fullPage
       fullpage_api.moveTo(index);
     } else {
       // fallback sans fullPage
@@ -67,8 +69,35 @@ if (themeBtn) {
   });
 }
 
+/*******************************
+ * I18N (TRADUCTIONS)
+ *******************************/
 // 👉 FR PAR DÉFAUT, SANS LOCALSTORAGE
 let i18nLang = "FR";
+
+// met à jour les tooltips fullPage avec la langue donnée
+function updateFullpageTooltips(lang) {
+  if (typeof fullpage_api === "undefined") return;
+  if (typeof i18nTranslations === "undefined") return;
+
+  const dict = i18nTranslations[lang];
+  if (!dict) return;
+
+  const labels = [
+    dict["nav.home"],
+    dict["nav.about"],
+    dict["nav.skills"],
+    dict["nav.projects"],
+    dict["nav.contact"]
+  ];
+
+  const tooltips = document.querySelectorAll("#fp-nav ul li .fp-tooltip");
+  tooltips.forEach((el, index) => {
+    if (labels[index]) {
+      el.textContent = labels[index];
+    }
+  });
+}
 
 function applyI18n(lang) {
   i18nLang = lang;
@@ -94,6 +123,9 @@ function applyI18n(lang) {
   // Langue affichée
   const currentSpan = document.getElementById("current-lang");
   if (currentSpan) currentSpan.textContent = lang;
+
+  // 👉 mettre à jour les tooltips de fullPage
+  updateFullpageTooltips(lang);
 }
 
 function setupI18n() {
@@ -129,6 +161,15 @@ setupI18n();
 /*******************************
  * PARTICULES (CANVAS HERO)
  *******************************/
+function updateScrollProgressByIndex(sectionIndex) {
+  const bar = document.getElementById("scroll-progress-bar");
+  if (!bar) return;
+
+  // sectionIndex va de 1 à TOTAL_SECTIONS
+  const ratio = (sectionIndex - 1) / (TOTAL_SECTIONS - 1);  // 0 → 1
+  bar.style.transform = `scaleX(${ratio})`;
+}
+
 function setupHeroParticles() {
   const heroCanvas = document.getElementById("hero-bg");
   if (!heroCanvas) return;
@@ -215,15 +256,18 @@ function setupHeroParticles() {
   animate();
 }
 
+/*******************************
+ * SCROLL HORIZONTAL PROJETS
+ *******************************/
 function setupProjectsHorizontalScroll() {
-  const scroller = document.getElementById('projects-scroller');
+  const scroller = document.getElementById("projects-scroller");
   if (!scroller) return;
 
   // 👉 état pour éviter de quitter la section trop vite
   let readyToLeaveDown = false;
   let leaveDownResetTimer = null;
 
-  scroller.addEventListener('wheel', (e) => {
+  scroller.addEventListener("wheel", (e) => {
     const delta = e.deltaY;
     if (delta === 0) return;
 
@@ -234,7 +278,7 @@ function setupProjectsHorizontalScroll() {
     const atStart = scroller.scrollLeft <= 0;
     const atEnd = scroller.scrollLeft >= maxScrollLeft - 2; // petite marge
 
-    const FACTOR = 1.8;                  // vitesse horizontale
+    const FACTOR = 1.8; // vitesse horizontale
     const step = Math.abs(delta) * FACTOR;
 
     // reset de l'armement quand on re-scroll horizontalement
@@ -264,7 +308,7 @@ function setupProjectsHorizontalScroll() {
     }
 
     // 2) Au tout début → on remonte directement vers la section précédente
-    if (typeof fullpage_api !== 'undefined') {
+    if (typeof fullpage_api !== "undefined") {
       e.preventDefault();
       e.stopPropagation();
 
@@ -284,7 +328,7 @@ function setupProjectsHorizontalScroll() {
           // si l'utilisateur ne re-scroll pas dans le délai, on annule
           leaveDownResetTimer = setTimeout(() => {
             readyToLeaveDown = false;
-          }, 500); // ⏱️ délai avant d'oublier (0.7s environ)
+          }, 500); // délai avant d'oublier
 
           return; // on reste dans la section Projects
         }
@@ -298,23 +342,31 @@ function setupProjectsHorizontalScroll() {
   }, { passive: false });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof fullpage !== 'undefined') {
-    new fullpage('#fullpage', {
+/*******************************
+ * INIT FULLPAGE + SETUP
+ *******************************/
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof fullpage !== "undefined") {
+    new fullpage("#fullpage", {
       // Navigation
       navigation: true,
-      navigationPosition: 'right',
-      navigationTooltips: ['Accueil', 'À propos', 'Compétences', 'Portfolio', 'Contact'],
+      navigationPosition: "right",
+      navigationTooltips: [
+        i18nTranslations[i18nLang]["nav.home"],
+        i18nTranslations[i18nLang]["nav.about"],
+        i18nTranslations[i18nLang]["nav.skills"],
+        i18nTranslations[i18nLang]["nav.projects"],
+        i18nTranslations[i18nLang]["nav.contact"]
+      ],
       showActiveTooltip: true,
 
-        // Scrolling
-      scrollingSpeed: 1400,                 // plus long = plus doux (700 → 1100)
+      // Scrolling
+      scrollingSpeed: 1400, // plus long = plus doux
       autoScrolling: true,
       fitToSection: true,
-      fitToSectionDelay: 400,               // un peu moins de délai après arrêt
+      fitToSectionDelay: 500,
       scrollBar: false,
-      easingcss3: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
-      fitToSectionDelay: 500, 
+      easingcss3: "cubic-bezier(0.25, 0.1, 0.25, 1)",
 
       // Accessibility
       keyboardScrolling: true,
@@ -323,26 +375,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Design
       verticalCentered: true,
-      paddingTop: '60px',
-      sectionSelector: '.section',
+      paddingTop: "60px",
+      sectionSelector: ".section",
 
       onLeave(origin, destination, direction) {
-        const links = Array.from(document.querySelectorAll('.nav-link'));
-        links.forEach(l => l.classList.remove('active'));
+        const links = Array.from(document.querySelectorAll(".nav-link"));
+        links.forEach(l => l.classList.remove("active"));
 
         const active = links[destination.index];
-        if (active) active.classList.add('active');
+        if (active) active.classList.add("active");
+
+        // 👉 destination.index commence à 0, donc +1
+        updateScrollProgressByIndex(destination.index + 1);
       },
+
 
       // 👉 quand fullPage a fini de tout initialiser
       afterRender() {
         setupHeroParticles();
-        setupProjectsHorizontalScroll();   // ⬅️ ON AJOUTE ÇA
+        setupProjectsHorizontalScroll();
+        // s'assure que les tooltips sont bien dans la langue courante
+        updateScrollProgressByIndex(1);
       }
     });
   } else {
     // 👉 au cas où fullPage n’est pas chargé (fallback simple)
     setupHeroParticles();
-    setupProjectsHorizontalScroll();       // ⬅️ ET ÇA AUSSI ICI
+    setupProjectsHorizontalScroll();
   }
 });
