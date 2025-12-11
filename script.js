@@ -417,15 +417,30 @@ document.addEventListener("DOMContentLoaded", () => {
     setupProjectsHorizontalScroll();
   }
   });
-  
- // Afficher le message "merci" après redirection FormSubmit
+
+// Afficher le message de confirmation après la redirection FormSubmit
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
+
   if (params.get("sent") === "true") {
     const status = document.getElementById("form-status");
     if (status) {
       status.classList.add("visible");
+
+      // optionnel : le faire disparaître après 6 secondes
+      setTimeout(() => {
+        status.classList.remove("visible");
+      }, 6000);
     }
+
+    params.delete("sent");
+    const newQuery = params.toString();
+    const newUrl =
+      window.location.pathname +
+      (newQuery ? "?" + newQuery : "") +
+      window.location.hash;
+
+    window.history.replaceState({}, "", newUrl);
   }
 });
 

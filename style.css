@@ -1106,6 +1106,7 @@ p {
 
 .form-status.visible {
   opacity: 1;
+  font-weight: 600;
 }
 
 /* Masquer le "Made with fullPage.js" */
