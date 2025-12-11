@@ -8,7 +8,6 @@ const SECTION_INDEX = {
 };
 const TOTAL_SECTIONS = Object.keys(SECTION_INDEX).length;
 
-
 /*******************************
  * NAVIGATION + SCROLL (fullPage piloté par index)
  *******************************/
@@ -172,17 +171,34 @@ function setupI18n() {
 setupI18n();
 
 /*******************************
- * PARTICULES (CANVAS HERO)
+ * BARRE DE PROGRESSION + URL HASH
  *******************************/
 function updateScrollProgressByIndex(sectionIndex) {
   const bar = document.getElementById("scroll-progress-bar");
   if (!bar) return;
 
-  // sectionIndex va de 1 à TOTAL_SECTIONS
   const ratio = (sectionIndex - 1) / (TOTAL_SECTIONS - 1);  // 0 → 1
   bar.style.transform = `scaleX(${ratio})`;
 }
 
+// 👉 nouvelle fonction pour mettre à jour #home, #about, ...
+function updateUrlHashByIndex(sectionIndex) {
+  const entries = Object.entries(SECTION_INDEX); // [["home",1],["about",2],...]
+  const found = entries.find(([, index]) => index === sectionIndex);
+  if (!found) return;
+
+  const sectionId = found[0]; // "home", "about", ...
+
+  if (history.replaceState) {
+    history.replaceState(null, "", "#" + sectionId);
+  } else {
+    window.location.hash = sectionId;
+  }
+}
+
+/*******************************
+ * PARTICULES (CANVAS HERO)
+ *******************************/
 function setupHeroParticles() {
   const heroCanvas = document.getElementById("hero-bg");
   if (!heroCanvas) return;
@@ -276,7 +292,6 @@ function setupProjectsHorizontalScroll() {
   const scroller = document.getElementById("projects-scroller");
   if (!scroller) return;
 
-  // 👉 état pour éviter de quitter la section trop vite
   let readyToLeaveDown = false;
   let leaveDownResetTimer = null;
 
@@ -289,12 +304,11 @@ function setupProjectsHorizontalScroll() {
 
     const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
     const atStart = scroller.scrollLeft <= 0;
-    const atEnd = scroller.scrollLeft >= maxScrollLeft - 2; // petite marge
+    const atEnd = scroller.scrollLeft >= maxScrollLeft - 2;
 
-    const FACTOR = 1.8; // vitesse horizontale
+    const FACTOR = 1.8;
     const step = Math.abs(delta) * FACTOR;
 
-    // reset de l'armement quand on re-scroll horizontalement
     const resetLeaveDown = () => {
       readyToLeaveDown = false;
       if (leaveDownResetTimer) {
@@ -303,7 +317,6 @@ function setupProjectsHorizontalScroll() {
       }
     };
 
-    // 1) Scroll horizontal tant qu'on n'est pas au bord
     if (goingDown && !atEnd) {
       e.preventDefault();
       e.stopPropagation();
@@ -320,33 +333,25 @@ function setupProjectsHorizontalScroll() {
       return;
     }
 
-    // 2) Au tout début → on remonte directement vers la section précédente
     if (typeof fullpage_api !== "undefined") {
       e.preventDefault();
       e.stopPropagation();
 
-      // 👉 vers le HAUT : pas besoin de délai, on peut partir direct
       if (goingUp && atStart) {
         fullpage_api.moveSectionUp();
         resetLeaveDown();
         return;
       }
 
-      // 👉 vers le BAS, à la fin des projets : on demande 2 scrolls
       if (goingDown && atEnd) {
         if (!readyToLeaveDown) {
-          // 1er scroll : on "arme" la sortie
           readyToLeaveDown = true;
-
-          // si l'utilisateur ne re-scroll pas dans le délai, on annule
           leaveDownResetTimer = setTimeout(() => {
             readyToLeaveDown = false;
-          }, 500); // délai avant d'oublier
-
-          return; // on reste dans la section Projects
+          }, 500);
+          return;
         }
 
-        // 2e scroll dans le délai → on descend vers Contact
         fullpage_api.moveSectionDown();
         resetLeaveDown();
         return;
@@ -372,9 +377,10 @@ document.addEventListener("DOMContentLoaded", () => {
         i18nTranslations[i18nLang]["nav.contact"]
       ],
       showActiveTooltip: true,
+      anchors: ["home", "about", "skills", "projects", "contact"],
 
       // Scrolling
-      scrollingSpeed: 1400, // plus long = plus doux
+      scrollingSpeed: 1400,
       autoScrolling: true,
       fitToSection: true,
       fitToSectionDelay: 500,
@@ -398,25 +404,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const active = links[destination.index];
         if (active) active.classList.add("active");
 
-        // 👉 destination.index commence à 0, donc +1
-        updateScrollProgressByIndex(destination.index + 1);
+        const sectionIndex = destination.index + 1;
+
+        // barre de progression
+        updateScrollProgressByIndex(sectionIndex);
+
+        // mettre à jour l’URL (#home, #about, …)
+        updateUrlHashByIndex(sectionIndex);
       },
 
-
-      // 👉 quand fullPage a fini de tout initialiser
       afterRender() {
         setupHeroParticles();
         setupProjectsHorizontalScroll();
-        // s'assure que les tooltips sont bien dans la langue courante
+
+        // démarrer au bon état
         updateScrollProgressByIndex(1);
+        updateUrlHashByIndex(1); // au chargement → #home
       }
     });
   } else {
-    // 👉 au cas où fullPage n’est pas chargé (fallback simple)
     setupHeroParticles();
     setupProjectsHorizontalScroll();
   }
-  });
+});
 
 // Afficher le message de confirmation après la redirection FormSubmit
 document.addEventListener("DOMContentLoaded", () => {
@@ -427,7 +437,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (status) {
       status.classList.add("visible");
 
-      // optionnel : le faire disparaître après 6 secondes
       setTimeout(() => {
         status.classList.remove("visible");
       }, 6000);
@@ -443,5 +452,3 @@ document.addEventListener("DOMContentLoaded", () => {
     window.history.replaceState({}, "", newUrl);
   }
 });
-
-
