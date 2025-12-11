@@ -416,5 +416,17 @@ document.addEventListener("DOMContentLoaded", () => {
     setupHeroParticles();
     setupProjectsHorizontalScroll();
   }
+  });
   
+ // Afficher le message "merci" après redirection FormSubmit
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("sent") === "true") {
+    const status = document.getElementById("form-status");
+    if (status) {
+      status.classList.add("visible");
+    }
+  }
 });
+
+
