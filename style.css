@@ -602,11 +602,21 @@ body {
   display: none; /* Chrome, Safari */
 }
 
-/* bande horizontale de projets */
-.projects-grid {
-  display: flex;       /* 👉 horizontal */
-  gap: 1.4rem;
-}
+  /* projets en colonne sur mobile (pas de scroll horizontal) */
+  .projects-scroller {
+    overflow-x: visible;
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .projects-grid .project-card {
+    flex: 0 0 auto;
+  }
+
 
 /* taille des cartes (≈ 2 visibles sur desktop) */
 .projects-grid .project-card {

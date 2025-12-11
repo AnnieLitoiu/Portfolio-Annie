@@ -17,6 +17,19 @@ const navLinks = document.querySelectorAll(".nav-link");
 // tous les liens qui doivent scroller (inclut le logo .brand)
 const scrollLinks = document.querySelectorAll(".nav-link, .hero-actions a, .about-intro a, .brand");
 
+/*******************************
+ * BURGER MENU (ouvrir / fermer)
+ *******************************/
+const burger = document.getElementById("burger");
+const mainNav = document.getElementById("main-nav");
+
+if (burger && mainNav) {
+  burger.addEventListener("click", () => {
+    burger.classList.toggle("open");
+    mainNav.classList.toggle("open");
+  });
+}
+
 scrollLinks.forEach(link => {
   link.addEventListener("click", (e) => {
     const href = link.getAttribute("href");
