@@ -591,10 +591,33 @@ body {
   max-width: 1100px;
   margin: 0 auto;
 }
+/* conteneur scrollable horizontal */
+.projects-scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+}
+.projects-scroller::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* bande horizontale de projets */
 .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;       /* 👉 horizontal */
   gap: 1.4rem;
+}
+
+/* taille des cartes (≈ 2 visibles sur desktop) */
+.projects-grid .project-card {
+  flex: 0 0 48%;       /* environ 2 cartes visibles */
+}
+
+/* mobile : 1 projet visible */
+@media (max-width: 880px) {
+  .projects-grid .project-card {
+    flex: 0 0 90%;
+  }
 }
 .project-card {
   background: var(--bg-alt);

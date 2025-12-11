@@ -539,6 +539,90 @@ function setupHeroParticles() {
   resizeCanvas();
   animate();
 }
+
+function setupProjectsHorizontalScroll() {
+  const scroller = document.getElementById('projects-scroller');
+  if (!scroller) return;
+
+  // 👉 état pour éviter de quitter la section trop vite
+  let readyToLeaveDown = false;
+  let leaveDownResetTimer = null;
+
+  scroller.addEventListener('wheel', (e) => {
+    const delta = e.deltaY;
+    if (delta === 0) return;
+
+    const goingDown = delta > 0;
+    const goingUp = delta < 0;
+
+    const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+    const atStart = scroller.scrollLeft <= 0;
+    const atEnd = scroller.scrollLeft >= maxScrollLeft - 2; // petite marge
+
+    const FACTOR = 1.8;                  // vitesse horizontale
+    const step = Math.abs(delta) * FACTOR;
+
+    // reset de l'armement quand on re-scroll horizontalement
+    const resetLeaveDown = () => {
+      readyToLeaveDown = false;
+      if (leaveDownResetTimer) {
+        clearTimeout(leaveDownResetTimer);
+        leaveDownResetTimer = null;
+      }
+    };
+
+    // 1) Scroll horizontal tant qu'on n'est pas au bord
+    if (goingDown && !atEnd) {
+      e.preventDefault();
+      e.stopPropagation();
+      resetLeaveDown();
+      scroller.scrollLeft = Math.min(maxScrollLeft, scroller.scrollLeft + step);
+      return;
+    }
+
+    if (goingUp && !atStart) {
+      e.preventDefault();
+      e.stopPropagation();
+      resetLeaveDown();
+      scroller.scrollLeft = Math.max(0, scroller.scrollLeft - step);
+      return;
+    }
+
+    // 2) Au tout début → on remonte directement vers la section précédente
+    if (typeof fullpage_api !== 'undefined') {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // 👉 vers le HAUT : pas besoin de délai, on peut partir direct
+      if (goingUp && atStart) {
+        fullpage_api.moveSectionUp();
+        resetLeaveDown();
+        return;
+      }
+
+      // 👉 vers le BAS, à la fin des projets : on demande 2 scrolls
+      if (goingDown && atEnd) {
+        if (!readyToLeaveDown) {
+          // 1er scroll : on "arme" la sortie
+          readyToLeaveDown = true;
+
+          // si l'utilisateur ne re-scroll pas dans le délai, on annule
+          leaveDownResetTimer = setTimeout(() => {
+            readyToLeaveDown = false;
+          }, 500); // ⏱️ délai avant d'oublier (0.7s environ)
+
+          return; // on reste dans la section Projects
+        }
+
+        // 2e scroll dans le délai → on descend vers Contact
+        fullpage_api.moveSectionDown();
+        resetLeaveDown();
+        return;
+      }
+    }
+  }, { passive: false });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof fullpage !== 'undefined') {
     new fullpage('#fullpage', {
@@ -548,12 +632,14 @@ document.addEventListener('DOMContentLoaded', () => {
       navigationTooltips: ['Accueil', 'À propos', 'Compétences', 'Portfolio', 'Contact'],
       showActiveTooltip: true,
 
-      // Scrolling
-      scrollingSpeed: 700,
+        // Scrolling
+      scrollingSpeed: 1400,                 // plus long = plus doux (700 → 1100)
       autoScrolling: true,
       fitToSection: true,
-      fitToSectionDelay: 600,
+      fitToSectionDelay: 400,               // un peu moins de délai après arrêt
       scrollBar: false,
+      easingcss3: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+      fitToSectionDelay: 500, 
 
       // Accessibility
       keyboardScrolling: true,
@@ -573,14 +659,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (active) active.classList.add('active');
       },
 
-      // 👉 quand fullPage a fini de poser les hauteurs,
-      // on peut calculer la taille du canvas et lancer les particules
+      // 👉 quand fullPage a fini de tout initialiser
       afterRender() {
         setupHeroParticles();
+        setupProjectsHorizontalScroll();   // ⬅️ ON AJOUTE ÇA
       }
     });
   } else {
     // 👉 au cas où fullPage n’est pas chargé (fallback simple)
     setupHeroParticles();
+    setupProjectsHorizontalScroll();       // ⬅️ ET ÇA AUSSI ICI
   }
 });
