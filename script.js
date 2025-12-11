@@ -171,7 +171,7 @@ function setupI18n() {
 setupI18n();
 
 /*******************************
- * BARRE DE PROGRESSION + URL HASH
+ * BARRE DE PROGRESSION
  *******************************/
 function updateScrollProgressByIndex(sectionIndex) {
   const bar = document.getElementById("scroll-progress-bar");
@@ -179,21 +179,6 @@ function updateScrollProgressByIndex(sectionIndex) {
 
   const ratio = (sectionIndex - 1) / (TOTAL_SECTIONS - 1);  // 0 → 1
   bar.style.transform = `scaleX(${ratio})`;
-}
-
-// 👉 nouvelle fonction pour mettre à jour #home, #about, ...
-function updateUrlHashByIndex(sectionIndex) {
-  const entries = Object.entries(SECTION_INDEX); // [["home",1],["about",2],...]
-  const found = entries.find(([, index]) => index === sectionIndex);
-  if (!found) return;
-
-  const sectionId = found[0]; // "home", "about", ...
-
-  if (history.replaceState) {
-    history.replaceState(null, "", "#" + sectionId);
-  } else {
-    window.location.hash = sectionId;
-  }
 }
 
 /*******************************
@@ -359,7 +344,6 @@ function setupProjectsHorizontalScroll() {
     }
   }, { passive: false });
 }
-
 /*******************************
  * INIT FULLPAGE + SETUP
  *******************************/
@@ -405,31 +389,35 @@ document.addEventListener("DOMContentLoaded", () => {
         if (active) active.classList.add("active");
 
         const sectionIndex = destination.index + 1;
-
-        // barre de progression
         updateScrollProgressByIndex(sectionIndex);
-
-        // mettre à jour l’URL (#home, #about, …)
-        updateUrlHashByIndex(sectionIndex);
       },
 
       afterRender() {
         setupHeroParticles();
         setupProjectsHorizontalScroll();
 
-        // démarrer au bon état
-        updateScrollProgressByIndex(1);
-        updateUrlHashByIndex(1); // au chargement → #home
+        // Vérifie si sent=true pour rester sur Contact
+        const params = new URLSearchParams(window.location.search);
+        const sent = params.get("sent") === "true";
+
+        let index;
+
+        if (sent) {
+          index = SECTION_INDEX["contact"];
+        } else {
+          const hash = window.location.hash.replace("#", "");
+          index = SECTION_INDEX[hash] || 1;
+        }
+
+        if (typeof index === "number") {
+          fullpage_api.silentMoveTo(index);
+          updateScrollProgressByIndex(index);
+        }
       }
     });
-  } else {
-    setupHeroParticles();
-    setupProjectsHorizontalScroll();
   }
-});
 
-// Afficher le message de confirmation après la redirection FormSubmit
-document.addEventListener("DOMContentLoaded", () => {
+  // Affichage message confirmation FormSubmit
   const params = new URLSearchParams(window.location.search);
 
   if (params.get("sent") === "true") {
@@ -442,6 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 6000);
     }
 
+    // Retirer ?sent=true mais garder #contact
     params.delete("sent");
     const newQuery = params.toString();
     const newUrl =
@@ -451,4 +440,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.history.replaceState({}, "", newUrl);
   }
+
 });
