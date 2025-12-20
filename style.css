@@ -272,7 +272,7 @@ body {
 }
 
 .typed-cursor {
-  display: none !important;
+  display: inline-block;
   width: 1px;
   background: var(--text);
   animation: blink 0.7s infinite;
@@ -374,23 +374,25 @@ body {
   box-shadow: 0 0 10px rgba(14, 116, 120, 0.25);
 }
 
+/* avatar rond avec double bord */
 .hero-avatar {
   position: relative;
-  flex: 0 0 auto;          /* ne pas s'étirer */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 340px;
+  height: 340px;
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .hero-avatar img {
-  width: 260px;            /* taille fixe, carrée */
-  height: 260px;
-  border-radius: 50%;      /* cercle parfait */
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
   object-fit: cover;
-  object-position: 50% 35%; /* ajuste un peu le visage */
+  object-position: 50% 45%;
   border: 10px solid var(--avatar-border);
   box-shadow: 0 0 0 4px var(--accent);
-  display: block;
 }
 
 /* titres de sections */
@@ -591,29 +593,11 @@ body {
   max-width: 1100px;
   margin: 0 auto;
 }
-
-/* conteneur scrollable horizontal (desktop) */
-.projects-scroller {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 0.5rem;
-  scrollbar-width: none;          /* Firefox */
-}
-.projects-scroller::-webkit-scrollbar {
-  display: none;                  /* Chrome, Safari */
-}
-
-/* bande horizontale de projets (desktop) */
 .projects-grid {
-  display: flex;                  /* 👉 horizontal */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.4rem;
 }
-
-/* taille des cartes (≈ 2–3 visibles sur desktop) */
-.projects-grid .project-card {
-  flex: 0 0 32%;
-}
-
 .project-card {
   background: var(--bg-alt);
   border: 1px solid rgba(255, 255, 255, 0.03);
@@ -624,140 +608,6 @@ body {
   min-height: 100%;
   transition: transform 0.15s ease-out, box-shadow 0.2s ease-out;
 }
-[data-theme="light"] .project-card {
-  background: #fff;
-  border: 1px solid #e3e3e3;
-}
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(14, 116, 120, 0.12);
-}
-
-.project-thumb {
-  width: 100%;
-  height: 180px;
-  overflow: hidden;
-  background: rgba(14, 116, 120, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-.project-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  transition: transform 0.4s ease;
-}
-.project-card:hover .project-thumb img {
-  transform: scale(1.08);
-}
-
-.project-thumb-empty {
-  display: grid;
-  place-items: center;
-  color: var(--muted);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.project-body {
-  padding: 1.1rem 1.05rem 1.05rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  flex: 1;
-}
-.project-body h3 {
-  font-size: 1.02rem;
-}
-.project-body p {
-  color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.55;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.project-tags span {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text);
-  padding: 0;
-  margin: 0;
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-}
-.project-tags span::after {
-  content: "·";
-  margin-left: 0.3rem;
-  opacity: 0.6;
-}
-.project-tags span:last-child::after {
-  content: "";
-}
-
-.project-actions {
-  margin-top: auto;
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.btn.small {
-  padding: 0.4rem 0.9rem;
-  font-size: 0.75rem;
-}
-
-.project-actions .btn {
-  overflow: hidden;
-}
-.project-actions .btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(14, 116, 120, 0.25) 50%,
-    transparent 100%
-  );
-  transition: all 0.5s ease;
-}
-.project-actions .btn:hover::before {
-  left: 100%;
-}
-.project-actions .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 10px rgba(14, 116, 120, 0.35);
-}
-.project-actions .btn i {
-  transition: transform 0.25s ease;
-}
-.project-actions .btn:hover i {
-  transform: translateY(-2px);
-}
-
-@media (max-width: 880px) {
-  .projects-scroller {
-    overflow-x: auto;
-  }
-
-  .projects-grid {
-    flex-direction: row;
-  }
-
-  .projects-grid .project-card {
-    flex: 0 0 90%;   
-  }
-}
-
 [data-theme="light"] .project-card {
   background: #fff;
   border: 1px solid #e3e3e3;
@@ -815,7 +665,7 @@ body {
 }
 
 .project-tags span {
-  font-size: 1rem;      
+  font-size: 1 rem;      
   font-weight: 600;       
   color: var(--text);     
   padding: 0;
@@ -1011,41 +861,29 @@ body {
     justify-content: space-between;
   }
 
+  /* hero vertical */
   .hero {
     min-height: auto;
-    padding-top: 2rem;
   }
-
   .hero-container {
-    display: flex;
-    flex-direction: column-reverse; /* avatar en dessous du texte */
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0 1.5rem;              /* moins de marge latérale */
-    box-sizing: border-box;
+    flex-direction: column;
+    text-align: center;
   }
-
   .hero-content {
     text-align: center;
-    max-width: 100%;
   }
-
   #typed-text {
-    white-space: normal;            /* le titre peut revenir à la ligne */
+    white-space: normal;
   }
 
-  /* avatar un peu plus petit sur mobile */
+  /* avatar plus petit */
   .hero-avatar {
-    width: 220px;
-    height: 220px;
+    width: 280px;
+    height: 280px;
   }
-
   .hero-avatar img {
-    width: 100%;
-    height: 100%;
+    width: 240px;
+    height: 240px;
   }
 
   /* à propos en 1 colonne */
@@ -1106,69 +944,4 @@ p {
 
 .form-status.visible {
   opacity: 1;
-  font-weight: 600;
-}
-
-/* Masquer le "Made with fullPage.js" */
-.fp-watermark,
-.fp-watermark a {
-  display: none !important;
-}
-
-#home .hero-avatar {
-  margin-right: 80px;
-}
-
-/* =========================================================
-   BARRE DE PROGRESSION SCROLL (FULLPAGE)
-   ========================================================= */
-.scroll-progress-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;                 /* épaisseur de la ligne */
-  z-index: 1500;               /* au-dessus du header */
-  pointer-events: none;        /* ne bloque pas les clics */
-}
-
-.scroll-progress-bar {
-  width: 100%;
-  height: 100%;
-  background: var(--accent);   /* turquoise du thème */
-  transform-origin: 0 50%;
-  transform: scaleX(0);        /* commence vide */
-  transition: transform 0.35s ease-out;
-}
-
-/* =========================================================
-   FULLPAGE NAV – FIX LIGHT MODE + REMOVE UGLY BOX
-   ========================================================= */
-
-/* 1. Rendre le texte (tooltips) visible en mode clair */
-[data-theme="light"] .fp-tooltip {
-  color: #0f1717 !important; /* texte foncé clairement lisible */
-}
-
-/* 2. Retirer le carré / fond autour du texte */
-.fp-tooltip {
-  background: transparent !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-/* Bullets fullPage toujours alignés et identiques */
-#fp-nav ul li a span,
-#fp-nav ul li a.active span {
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background: var(--accent) !important;
-  margin: 6px 0 !important;
-  transform: none !important;
-}
-
-/* Couleur du bullet actif en light mode (optionnel) */
-[data-theme="light"] #fp-nav ul li a.active span {
-  background: #0f1717 !important;
 }
