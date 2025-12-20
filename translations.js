@@ -1,3 +1,7 @@
+
+/*******************************
+ * I18N (TRADUCTIONS)
+ *******************************/
 const i18nTranslations = {
   FR: {
     // SITE
@@ -5,7 +9,7 @@ const i18nTranslations = {
 
     // NAV
     "nav.home": "Accueil",
-    "nav.about": "À propos",
+    "nav.about": "A propos",
     "nav.skills": "Compétences",
     "nav.projects": "Portfolio",
     "nav.contact": "Contact",
@@ -322,3 +326,62 @@ const i18nTranslations = {
     "footer.text": "© 2025 Annie. Toate drepturile rezervate."
   }
 };
+
+// 👉 FR PAR DÉFAUT, SANS LOCALSTORAGE
+let i18nLang = "FR";
+
+function applyI18n(lang) {
+  i18nLang = lang;
+
+  const dict = i18nTranslations[lang];
+  if (!dict) return;
+
+  // TITLE
+  if (dict["site.title"]) document.title = dict["site.title"];
+
+  // TEXTES
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+
+  // PLACEHOLDERS
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key]) el.placeholder = dict[key];
+  });
+
+  // Langue affichée
+  const currentSpan = document.getElementById("current-lang");
+  if (currentSpan) currentSpan.textContent = lang;
+}
+
+function setupI18n() {
+  applyI18n(i18nLang);
+
+  const langBtn = document.getElementById("lang-btn");
+  const langMenu = document.getElementById("lang-menu");
+
+  if (!langBtn || !langMenu) return;
+
+  langBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    langMenu.style.display =
+      langMenu.style.display === "block" ? "none" : "block";
+  });
+
+  langMenu.querySelectorAll("button[data-lang]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      applyI18n(btn.dataset.lang);
+      langMenu.style.display = "none";
+    });
+  });
+
+  document.addEventListener("click", e => {
+    if (!langMenu.contains(e.target) && !langBtn.contains(e.target)) {
+      langMenu.style.display = "none";
+    }
+  });
+}
+
+setupI18n();
