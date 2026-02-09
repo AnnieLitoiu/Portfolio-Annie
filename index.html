@@ -407,7 +407,9 @@
                   data-i18n-placeholder="contact.form.message"></textarea>
 
         <input type="hidden" name="_subject" value="Nouveau message depuis le portfolio Annie">
-        <input type="hidden" name="_captcha" value="false">
+
+        <!-- Honeypot anti-bot -->
+        <input type="text" name="_honey" id="website" autocomplete="off" tabindex="-1" aria-hidden="true">
 
         <button type="submit" class="btn primary">
           <i class="fa-solid fa-paper-plane"></i>

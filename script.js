@@ -1,11 +1,13 @@
 /*******************************
  * NAVIGATION + SCROLL
  *******************************/
-const scrollLinks = document.querySelectorAll(".nav-link, .hero-actions a, .about-intro a");
+const scrollLinks = document.querySelectorAll(
+  ".nav-link, .hero-actions a, .about-intro a",
+);
 const navLinks = document.querySelectorAll(".nav-link");
 
-scrollLinks.forEach(link => {
-  link.addEventListener("click", e => {
+scrollLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
     const href = link.getAttribute("href");
     if (href && href.startsWith("#")) {
       e.preventDefault();
@@ -14,7 +16,7 @@ scrollLinks.forEach(link => {
       if (target) {
         window.scrollTo({
           top: target.offsetTop - 60,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
       const navEl = document.getElementById("main-nav");
@@ -28,10 +30,13 @@ scrollLinks.forEach(link => {
 // mettre la classe active au scroll
 window.addEventListener("scroll", () => {
   const scrollPos = window.scrollY + 80;
-  document.querySelectorAll("section[id]").forEach(sec => {
-    if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetHeight + sec.offsetTop) {
+  document.querySelectorAll("section[id]").forEach((sec) => {
+    if (
+      scrollPos >= sec.offsetTop &&
+      scrollPos < sec.offsetHeight + sec.offsetTop
+    ) {
       const id = sec.getAttribute("id");
-      navLinks.forEach(l => l.classList.remove("active"));
+      navLinks.forEach((l) => l.classList.remove("active"));
       const current = document.querySelector(`.nav-link[href="#${id}"]`);
       if (current) current.classList.add("active");
     }
@@ -102,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const heroCanvas = document.getElementById("hero-bg");
 if (heroCanvas) {
   const ctx = heroCanvas.getContext("2d");
-  let w = 0, h = 0;
+  let w = 0,
+    h = 0;
   let particles = [];
 
   const BASE = 200;
@@ -133,7 +139,7 @@ if (heroCanvas) {
         y: Math.random() * h,
         r: Math.random() * 2 + 0.5,
         dx: (Math.random() - 0.5) * 0.35,
-        dy: (Math.random() - 0.5) * 0.35
+        dy: (Math.random() - 0.5) * 0.35,
       });
     }
   }
@@ -188,10 +194,10 @@ if (heroCanvas) {
  * ACCORDÉON
  *******************************/
 const accordionItems = document.querySelectorAll(".accordion-item");
-accordionItems.forEach(item => {
+accordionItems.forEach((item) => {
   const header = item.querySelector(".accordion-header");
   header.addEventListener("click", () => {
-    accordionItems.forEach(i => {
+    accordionItems.forEach((i) => {
       if (i !== item) i.classList.remove("active");
     });
     item.classList.toggle("active");
@@ -206,6 +212,12 @@ const contactForm = document.querySelector(".contact-form");
 if (contactForm) {
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault(); // 👈 empêche la redirection
+
+    // Honeypot: si un bot remplit ce champ, on stoppe silencieusement
+    const honey = contactForm.querySelector("#website");
+    if (honey && honey.value.trim() !== "") {
+      return; // pas d'envoi
+    }
 
     const statusEl = document.getElementById("form-status");
     const dict = i18nTranslations[i18nLang] || i18nTranslations.FR;
@@ -222,8 +234,8 @@ if (contactForm) {
         method: contactForm.method || "POST",
         body: formData,
         headers: {
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       });
 
       if (res.ok) {
@@ -237,7 +249,6 @@ if (contactForm) {
     }
   });
 }
-
 
 /*******************************
  * PARALLAXE AVATAR HERO
@@ -253,7 +264,7 @@ if (contactForm) {
   if (window.innerWidth < 768) return;
 
   window.addEventListener("mousemove", (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 2; 
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
     const y = (e.clientY / window.innerHeight - 0.5) * 2;
 
     const moveX = -x * maxMove;
